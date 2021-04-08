@@ -16,6 +16,11 @@ const Node = ({ node }) => {
   return (
     <>
       <g style={{ fontSize: sizes.textSize + 'px' }}>
+        <circle
+          fill={`lightblue`}
+          stroke={`blue`}
+          r={sizes.radius}
+        />
         <text
           x={sizes.radius + 7}
           y={sizes.radius / 2}
