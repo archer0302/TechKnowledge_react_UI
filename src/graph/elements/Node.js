@@ -17,8 +17,8 @@ const Node = ({ node }) => {
     <>
       <g style={{ fontSize: sizes.textSize + 'px' }}>
         <circle
-          fill={`lightblue`}
-          stroke={`blue`}
+          fill={node.center ? `pink` : `lightblue`}
+          stroke={node.center ? `red` : `blue`}
           r={sizes.radius}
         />
         <text

@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Line = ({ ...restProps }) => {
+const Line = ({ link, ...restProps }) => {
   return (
     <line
       {...restProps}
-      stroke='blue'
+      stroke={link.stroke}
     />
   )
 };
