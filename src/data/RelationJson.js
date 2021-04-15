@@ -9,9 +9,6 @@ const fetchRelation = (center) => {
   firstLayerRelations.forEach(element => {
     const relationArray = element[0].flat();
     nodes.push.apply(nodes, relationArray);
-    if (relationArray.includes('c#')) {
-      console.log(relationArray);
-    }
     firstLayerLines.push({
       "source": relationArray[0], 
       "target": relationArray[1]

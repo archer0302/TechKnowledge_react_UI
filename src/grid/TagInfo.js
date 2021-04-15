@@ -5,10 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      maxWidth: '40%',
-      margin: theme.spacing(3),
-    }
+    
   })
 );
 
@@ -16,7 +13,7 @@ function TagInfo({tagName}) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card>
       <CardContent>
         <Typography variant='h4'>
           {tagName}
