@@ -1,4 +1,4 @@
-const relation = require('./relation.json');
+const relation = require('./relation_new.json');
 
 const fetchRelation = (center) => {
   const firstLayerRelations = relation[center];

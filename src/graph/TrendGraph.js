@@ -8,7 +8,7 @@ function TrendGraph({tag}) {
 
   return (
     <LineChart width={600} height={300} data={data}>
-      <Line type="monotone" dataKey="count" stroke="#8884d8" />
+      <Line type="monotone" dataKey="count" dot={false}/>
       <CartesianGrid stroke="#ccc" />
       <XAxis dataKey="ym" />
       <YAxis />

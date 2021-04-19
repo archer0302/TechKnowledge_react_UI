@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -10,18 +11,17 @@ const useStyles = makeStyles((theme) => ({
   })
 );
 
-function TagInfo({tagName}) {
+function TopQuestions({tagName}) {
   const classes = useStyles();
-  const [excerpt, setExcerpt] = useState([]);
+  const [faqs, setFaqs] = useState([]);
 
   useEffect(() => {
-    axios.get("https://api.stackexchange.com/2.2/tags/" + tagName + "/wikis?site=stackoverflow")
-      .then(res => res.data.items[0])
+    axios.get("https://api.stackexchange.com/2.2/tags/" + tagName + "/faq?site=stackoverflow")
+      .then(res => res.data.items)
       .catch(error => console.log(error))
       .then(
         (result) => {
-          console.log(result);
-          setExcerpt(result.excerpt);
+          setFaqs(result);
         }
       )
   }, [])
@@ -30,15 +30,19 @@ function TagInfo({tagName}) {
     <Card>
       <CardContent>
         <Typography variant='h4'>
-          {tagName}
+          Top Questions
         </Typography>
-        <Typography variant='body1'>
-          {String(excerpt)}
-        </Typography>
+        {faqs.slice(0, 5).map((faq) =>
+          <Typography variant='body1'>
+            <Link href={faq.link}>
+              {faq.title}
+            </Link>
+          </Typography>
+        )}
       </CardContent>
     </Card>
   )
 }
 
-export default TagInfo;
+export default TopQuestions;
 

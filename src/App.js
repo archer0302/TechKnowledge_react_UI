@@ -4,6 +4,7 @@ import NetworkGraph from './graph/NetworkGraph';
 import TrendGraph from './graph/TrendGraph';
 import Navigation from './navigation/Navigator';
 import TagInfo from './grid/TagInfo';
+import TopQuestions from './grid/TopQuestions';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
@@ -13,7 +14,7 @@ function App() {
     root: {
       height: "100vh"
     },
-    grid: {
+    parent: {
       padding: theme.spacing(2)
     },
     navi: {
@@ -35,12 +36,21 @@ function App() {
       <Grid item xs={2} className={classes.navi}>
         <Navigation />
       </Grid>
-      <Grid item className={classes.grid} xs={4}>
-        <TagInfo tagName="python" />
-        <TrendGraph tag="python" />
+      <Grid item className={classes.parent} xs={4}>
+        <Grid container spacing={5}>
+          <Grid item>
+            <TagInfo tagName="python" />
+          </Grid>
+          <Grid item>
+            <TrendGraph tag="python" />
+          </Grid>
+          <Grid item>
+            <TopQuestions tagName="python" />
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item className={classes.grid} xs={5}>
-        <NetworkGraph center="razor"/>
+      <Grid item className={classes.parent} xs={6}>
+        <NetworkGraph center="python"/>
       </Grid>
     </Grid>
     // </div>
