@@ -5,6 +5,7 @@ const Line = ({ link, ...restProps }) => {
     <line
       {...restProps}
       stroke={link.stroke}
+      distance={link.distance}
     />
   )
 };

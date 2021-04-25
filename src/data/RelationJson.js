@@ -3,43 +3,33 @@ const relation = require('./relation_new.json');
 const fetchRelation = (center) => {
   const firstLayerRelations = relation[center];
   let nodes = [];
-  let firstLayerLines = [];
   const secondLayerLines = [];
 
   firstLayerRelations.forEach(element => {
     const relationArray = element[0].flat();
     nodes.push.apply(nodes, relationArray);
-    firstLayerLines.push({
-      "source": relationArray[0], 
-      "target": relationArray[1]
-    });
   });
 
   nodes.forEach(node => {
     if (node !== center && !!relation[node]) {
       const secondLayerRelations = relation[node];
+      let checker = (arr, target) => target.every(v => arr.includes(v));
       
       secondLayerRelations.forEach(element => {
         const relationArray = element[0].flat();
-        nodes.push.apply(nodes, relationArray);
-        if (firstLayerLines.filter(e => e.source === relationArray[0] && e.target === relationArray[1]).length == 0) {
+
+        if (!relationArray.includes(center) && checker(nodes, relationArray)) {
+          nodes.push.apply(nodes, relationArray);
           secondLayerLines.push({
             "source": relationArray[0], 
             "target": relationArray[1], 
-            "stroke": "blue"
+            "stroke": "blue",
           });
         }
       });
-    
     }
   });
 
-  firstLayerLines = firstLayerLines.map(line => {
-    return {
-      ...line,
-      stroke: "red"
-    }
-  });
 
   nodes = Array.from(new Set(nodes));
 
@@ -51,7 +41,7 @@ const fetchRelation = (center) => {
     }
   });
 
-  return {"nodes": node_elements, "links": [...firstLayerLines, ...secondLayerLines]};
+  return {"nodes": node_elements, "links": [...secondLayerLines]};
 }
 
 export default fetchRelation;

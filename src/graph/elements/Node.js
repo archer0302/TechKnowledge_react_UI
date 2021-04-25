@@ -1,7 +1,7 @@
 import React from 'react';
 
-const fontSize = 14;
-const radius = 10;
+const fontSize = 10;
+const radius = 5;
 
 const Node = ({ node }) => {
 

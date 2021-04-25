@@ -11,16 +11,13 @@ function NetworkGraph({center}) {
   const openDrawer = () => setOpened(true);
 
   const [props, setProps] = useState({
-    nodeDistance: 300,
+    nodeDistance: 3,
     zoomDepth: 3,
     hoverOpacity: .3,
     enableDrag: true,
-    pullIn: false,
+    pullIn: true,
   });
 
-  const handlePropsChange = ({ name, value }) => {
-    setProps({ ...props, [name]: value })
-  };
 
   const data = fetchRelation(center);
 
