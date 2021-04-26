@@ -3,6 +3,7 @@ import Graph from 'react-graph-network';
 
 import Line from './elements/Line';
 import Node from './elements/Node';
+import Card from '@material-ui/core/Card';
 import fetchRelation from '../data/RelationJson';
 
 function NetworkGraph({center}) {
@@ -11,7 +12,7 @@ function NetworkGraph({center}) {
   const openDrawer = () => setOpened(true);
 
   const [props, setProps] = useState({
-    nodeDistance: 3,
+    nodeDistance: 5,
     zoomDepth: 3,
     hoverOpacity: .3,
     enableDrag: true,
@@ -22,12 +23,14 @@ function NetworkGraph({center}) {
   const data = fetchRelation(center);
 
   return (
-    <Graph
-      data={data}
-      NodeComponent={Node}
-      LineComponent={Line}
-      {...props}
-    />
+    <Card style={{height: '100%'}}>
+      <Graph
+        data={data}
+        NodeComponent={Node}
+        LineComponent={Line}
+        {...props}
+      />
+    </Card>
   );
 }
 

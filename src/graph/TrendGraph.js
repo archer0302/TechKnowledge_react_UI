@@ -7,7 +7,7 @@ function TrendGraph({tag}) {
   const data = fetchTrendGraph(tag);
 
   return (
-    <LineChart width={600} height={300} data={data}>
+    <LineChart width={550} height={300} data={data}>
       <Line type="monotone" dataKey="count" dot={false}/>
       <CartesianGrid stroke="#ccc" />
       <XAxis dataKey="ym" />

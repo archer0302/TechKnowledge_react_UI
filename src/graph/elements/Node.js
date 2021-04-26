@@ -1,7 +1,7 @@
 import React from 'react';
 
 const fontSize = 10;
-const radius = 5;
+const radius = 7;
 
 const Node = ({ node }) => {
 
@@ -18,8 +18,9 @@ const Node = ({ node }) => {
       <g style={{ fontSize: sizes.textSize + 'px' }}>
         <circle
           fill={node.center ? `pink` : `lightblue`}
-          stroke={node.center ? `red` : `blue`}
+          // stroke={node.center ? `red` : `blue`}
           r={sizes.radius}
+          onClick={(e) => console.log(node.name)}
         />
         <text
           x={sizes.radius + 7}

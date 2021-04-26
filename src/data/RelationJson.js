@@ -5,11 +5,13 @@ const fetchRelation = (center) => {
   let nodes = [];
   const secondLayerLines = [];
 
+  // add all directed related nodes
   firstLayerRelations.forEach(element => {
     const relationArray = element[0].flat();
     nodes.push.apply(nodes, relationArray);
   });
 
+  // link nodes if related to each other
   nodes.forEach(node => {
     if (node !== center && !!relation[node]) {
       const secondLayerRelations = relation[node];
@@ -23,13 +25,12 @@ const fetchRelation = (center) => {
           secondLayerLines.push({
             "source": relationArray[0], 
             "target": relationArray[1], 
-            "stroke": "blue",
+            "stroke": "lightblue",
           });
         }
       });
     }
   });
-
 
   nodes = Array.from(new Set(nodes));
 
