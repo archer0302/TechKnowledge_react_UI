@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
@@ -6,15 +6,26 @@ import tag_list from '../data/tag_full_list.json';
 
 export default function FrontPage() {
 
+  const [value, setValue] = useState('');
+
   const filterOptions = createFilterOptions({
     matchFrom: 'any',
     limit: 10,
   });
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log('value:' + value);
+  }
+
   return (
-    <div style={{display:'flex', flexDirection: 'row', alignItems: 'center'}}>
+    <form style={{display:'flex', flexDirection: 'row', alignItems: 'center'}} onSubmit={handleSubmit}>
       <div>
         <Autocomplete
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
           style={{width: 500}}
           id="free-solo-demo"
           freeSolo
@@ -27,10 +38,10 @@ export default function FrontPage() {
         />
       </div>
       <div style={{marginLeft: '10px'}}>
-        <Button variant="contained" color="primary" size="medium">
+        <Button variant="contained" color="primary" size="medium" type="submit">
           Search
         </Button>
       </div>
-    </div>
+    </form>
   )
 }
