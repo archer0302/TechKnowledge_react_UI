@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +9,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import TagWiki from './layout/TagWiki';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 
 
@@ -54,42 +54,50 @@ function App() {
 
   return (
     <div className={classes.root}>
-      {/* Header */}
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            TechLand
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <Router>
+        {/* Header */}
+        <CssBaseline />
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <Typography variant="h6" noWrap>
+              TechLand
+            </Typography>
+          </Toolbar>
+        </AppBar>
 
-      {/* Menu drawer */}
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
+        {/* Menu drawer */}
+        <Drawer
+          className={classes.drawer}
+          variant="permanent"
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
 
-        <Toolbar />
-        <div className={classes.drawerContainer}>
-          <List>
-            {['TechWiki', 'TechCompare'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </div>
-      </Drawer>
+          <Toolbar />
+          <div className={classes.drawerContainer}>
+            <List>
+              {['TechWiki', 'TechCompare'].map((text, index) => (
+                <ListItem button key={text}>
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </Drawer>
 
-      {/* Main content */}
-      <main className={classes.content}>
-        <Toolbar/>
-        <TagWiki tag="python" />
-      </main>
+        {/* Main content */}
+        <main className={classes.content}>
+          <Toolbar/>
+            <Switch>
+              <Route path='/TagWiki'>
+                <TagWiki tag='python'/>
+              </Route>
+              <Route path='/'>
+              </Route>
+            </Switch>
+        </main>
+      </Router>
     </div>
   );
 }
