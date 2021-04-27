@@ -117,7 +117,7 @@ function App() {
           <Grid item xs={6}>
             <Grid container spacing={1} alignItems='stretch' className={classes.knowledgeGraph}>
               <Grid item xs={12}>
-                <NetworkGraph center="inheritance"/>
+                <NetworkGraph center="python"/>
               </Grid>
             </Grid>
           </Grid>
