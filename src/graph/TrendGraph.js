@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import fetchTrendGraph from '../data/TrendGraphJson';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';

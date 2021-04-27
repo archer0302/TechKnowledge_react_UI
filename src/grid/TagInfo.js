@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 
-const useStyles = makeStyles((theme) => ({
-    
-  })
-);
-
 function TagInfo({tagName}) {
-  const classes = useStyles();
   const [excerpt, setExcerpt] = useState([]);
 
   useEffect(() => {
@@ -24,7 +17,7 @@ function TagInfo({tagName}) {
           setExcerpt(result.excerpt);
         }
       )
-  }, [])
+  })
 
   return (
     <Card>

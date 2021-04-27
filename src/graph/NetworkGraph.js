@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Graph from 'react-graph-network';
 
 import Line from './elements/Line';
@@ -8,16 +8,13 @@ import fetchRelation from '../data/RelationJson';
 
 function NetworkGraph({center}) {
 
-  const [opened, setOpened] = useState(false);
-  const openDrawer = () => setOpened(true);
-
-  const [props, setProps] = useState({
+  const props = {
     nodeDistance: 5,
     zoomDepth: 3,
     hoverOpacity: .3,
     enableDrag: true,
     pullIn: true,
-  });
+  };
 
 
   const data = fetchRelation(center);

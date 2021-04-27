@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -47,11 +47,6 @@ function App() {
   }));
 
   const classes = useStyles();
-
-  const sections = [
-    { title: 'Technology', url: '#' },
-    { title: 'Technology', url: '#' }
-  ]
 
   return (
     <div className={classes.root}>

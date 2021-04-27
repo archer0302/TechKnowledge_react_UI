@@ -1,14 +1,14 @@
 const relation = require('./relation_0.0007_0.15.json');
 
-const colors = [
-  '#ACDDDE',
-  '#CAF1DE',
-  '#E1F8DC',
-  '#FEF8DD',
-  '#FFE7C7',
-  '#F7D8BA',
-  '#86C5D8'
-]
+// const colors = [
+//   '#ACDDDE',
+//   '#CAF1DE',
+//   '#E1F8DC',
+//   '#FEF8DD',
+//   '#FFE7C7',
+//   '#F7D8BA',
+//   '#86C5D8'
+// ]
 
 const fetchRelation = (center) => {
   const firstLayerRelations = relation[center];
