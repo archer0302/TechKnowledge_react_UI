@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import tag_list from '../data/tag_full_list.json';
+import NetWork from '../graph/NetWork';
 
 export default function FrontPage() {
 
@@ -19,29 +20,34 @@ export default function FrontPage() {
   }
 
   return (
-    <form style={{display:'flex', flexDirection: 'row', alignItems: 'center'}} onSubmit={handleSubmit}>
+    <div>
+      <form style={{display:'flex', flexDirection: 'row', alignItems: 'center'}} onSubmit={handleSubmit}>
+        <div>
+          <Autocomplete
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+            style={{width: 500}}
+            id="free-solo-demo"
+            freeSolo
+            filterOptions={filterOptions}
+            options={tag_list}
+            size="small"
+            renderInput={(params) => (
+              <TextField {...params} label="freeSolo" margin="normal" variant="outlined" />
+            )}
+          />
+        </div>
+        <div style={{marginLeft: '10px'}}>
+          <Button variant="contained" color="primary" size="medium" type="submit">
+            Search
+          </Button>
+        </div>
+      </form>
       <div>
-        <Autocomplete
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-          style={{width: 500}}
-          id="free-solo-demo"
-          freeSolo
-          filterOptions={filterOptions}
-          options={tag_list}
-          size="small"
-          renderInput={(params) => (
-            <TextField {...params} label="freeSolo" margin="normal" variant="outlined" />
-          )}
-        />
+        <NetWork />
       </div>
-      <div style={{marginLeft: '10px'}}>
-        <Button variant="contained" color="primary" size="medium" type="submit">
-          Search
-        </Button>
-      </div>
-    </form>
+    </div>
   )
 }

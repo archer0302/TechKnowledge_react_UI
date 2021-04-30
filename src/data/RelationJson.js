@@ -51,7 +51,6 @@ const fetchRelation = (center) => {
     return {
       "id": node,
       "name": node,
-      "center": node === center,
     }
   });
 
