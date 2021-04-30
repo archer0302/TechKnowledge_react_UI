@@ -5,8 +5,9 @@ import TagInfo from '../grid/TagInfo';
 import TopQuestions from '../grid/TopQuestions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import { useParams } from "react-router-dom";
 
-export default function TagWiki({ tag }) {
+export default function TagWiki() {
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,16 +20,18 @@ export default function TagWiki({ tag }) {
 
   const classes = useStyles();
 
+  const { tag } = useParams();
+
   return (
     <Grid
-          className={classes.root}
-          container
-          direction="row"
-          justify="left"
-          alignItems="stretch"
-          spacing={2}
-          xs={12}
-        >
+      className={classes.root}
+      container
+      direction="row"
+      justify="left"
+      alignItems="stretch"
+      spacing={2}
+      xs={12}
+    >
       <Grid item xs={5}>
         <Grid container spacing={4} justify='left'>
           <Grid item>

@@ -86,11 +86,11 @@ function App() {
         <main className={classes.content}>
           <Toolbar/>
             <Switch>
-              <Route path='/TagWiki'>
-                <TagWiki tag='python'/>
+              <Route path='/TagWiki/:tag'>
+                <TagWiki />
               </Route>
               <Route path='/'>
-                <FrontPage/>
+                <FrontPage />
               </Route>
             </Switch>
         </main>

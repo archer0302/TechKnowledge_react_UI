@@ -9,6 +9,7 @@ import axios from 'axios';
 function TopQuestions({tagName}) {
   const [faqs, setFaqs] = useState([]);
 
+  console.log(tagName);
   useEffect(() => {
     axios.get("https://api.stackexchange.com/2.2/tags/" + tagName + "/faq?site=stackoverflow")
       .then(res => res.data.items)
@@ -18,7 +19,7 @@ function TopQuestions({tagName}) {
           setFaqs(result);
         }
       )
-  })
+  });
 
   return (
     <Card>

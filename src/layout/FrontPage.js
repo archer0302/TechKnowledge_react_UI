@@ -5,6 +5,7 @@ import Alert from '@material-ui/lab/Alert';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import tag_list from '../data/tag_full_list.json';
 import NetWork from '../graph/NetWork';
+import { Redirect } from "react-router-dom";
 
 export default function FrontPage() {
 
@@ -57,6 +58,7 @@ export default function FrontPage() {
         </div>
         <div style={{marginLeft: '10px'}}>
           {(notFound && !!alert) ? <Alert severity="error">Tag {alert} not found.</Alert> : ''}
+          {result ? <Redirect to={"/TagWiki/" + encodeURI(result)} /> : ''}
         </div>
       </form>
       <div>
