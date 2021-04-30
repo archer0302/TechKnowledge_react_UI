@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import tag_list from '../data/tag_full_list.json';
 import NetWork from '../graph/NetWork';
@@ -8,6 +9,9 @@ import NetWork from '../graph/NetWork';
 export default function FrontPage() {
 
   const [value, setValue] = useState('');
+  const [result, setResult] = useState('');
+  const [notFound, setNotFound] = useState(false);
+  const [alert, setAlert] = useState('');
 
   const filterOptions = createFilterOptions({
     matchFrom: 'any',
@@ -16,7 +20,14 @@ export default function FrontPage() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('value:' + value);
+    console.log(value);
+    if (tag_list.includes(value)) {
+      setNotFound(false);
+      setResult(value);
+    } else {
+      setNotFound(true);
+      setAlert(value);
+    }
   }
 
   return (
@@ -25,7 +36,7 @@ export default function FrontPage() {
         <div>
           <Autocomplete
             value={value}
-            onChange={(event, newValue) => {
+            onInputChange={(event, newValue) => {
               setValue(newValue);
             }}
             style={{width: 500}}
@@ -43,6 +54,9 @@ export default function FrontPage() {
           <Button variant="contained" color="primary" size="medium" type="submit">
             Search
           </Button>
+        </div>
+        <div style={{marginLeft: '10px'}}>
+          {(notFound && !!alert) ? <Alert severity="error">Tag {alert} not found.</Alert> : ''}
         </div>
       </form>
       <div>
