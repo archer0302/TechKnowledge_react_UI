@@ -6,6 +6,8 @@ import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete
 import tag_list from '../data/tag_full_list.json';
 import NetWork from '../graph/NetWork';
 import { Redirect } from "react-router-dom";
+import fetchRelation from '../data/RelationJson';
+import * as d3 from 'd3';
 
 export default function FrontPage() {
 
@@ -30,6 +32,31 @@ export default function FrontPage() {
       setAlert(value);
     }
   }
+
+  const top10 = ['javascript',
+  'java',
+  'python',
+  'c#',
+  'php',
+  'android',
+  'html',
+  'jquery',
+  'c++',
+  'css'];
+
+  let nodesData = [];
+  let linkData = [];
+  const colors = d3.schemeCategory10;
+  console.log(colors);
+
+  top10.forEach((tag, i) => {
+    console.log(i + ", " + colors[i]);
+    let relation = fetchRelation(tag, true);
+    relation.nodes.forEach(n => n.color = colors[i]);
+    nodesData = nodesData.concat(relation.nodes);
+    relation.links.forEach(n => n.color = colors[i]);
+    linkData = linkData.concat(relation.links);
+  });
 
   return (
     <div>
@@ -61,8 +88,8 @@ export default function FrontPage() {
           {result ? <Redirect to={"/TagWiki/" + encodeURI(result)} /> : ''}
         </div>
       </form>
-      <div>
-        <NetWork />
+      <div style={{alignItems: 'center', display:'flex', flexDirection: 'column'}}>
+        <NetWork nodesData={nodesData} linkData={linkData} width={1600} height={700} />
       </div>
     </div>
   )

@@ -9,6 +9,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import TagWiki from './layout/TagWiki';
+import TagCompare from './layout/TagCompare';
 import FrontPage from './layout/FrontPage';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -86,6 +87,9 @@ function App() {
         <main className={classes.content}>
           <Toolbar/>
             <Switch>
+              <Route path='/TagCompare'>
+                <TagCompare />
+              </Route>
               <Route path='/TagWiki/:tag'>
                 <TagWiki />
               </Route>

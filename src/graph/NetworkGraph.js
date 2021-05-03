@@ -17,7 +17,7 @@ function NetworkGraph({center}) {
   };
 
 
-  const data = fetchRelation(center);
+  const data = fetchRelation(center, false);
 
   return (
     <Card style={{height: '100%'}}>

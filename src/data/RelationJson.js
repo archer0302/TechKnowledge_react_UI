@@ -1,25 +1,25 @@
+import * as d3 from 'd3';
+
 const relation = require('./relation_0.0007_0.15.json');
 
-// const colors = [
-//   '#ACDDDE',
-//   '#CAF1DE',
-//   '#E1F8DC',
-//   '#FEF8DD',
-//   '#FFE7C7',
-//   '#F7D8BA',
-//   '#86C5D8'
-// ]
+const colors = d3.schemeCategory10;
 
-const fetchRelation = (center) => {
+const fetchRelation = (center, includeCenter) => {
+  includeCenter = includeCenter ? includeCenter : false;
   const firstLayerRelations = relation[center];
   let nodes = [];
-  const secondLayerLines = [];
+  const lines = [];
+  firstLayerRelations.sort((a, b) => b[1][0] - a[1][0]);
 
   // add all directed related nodes
   firstLayerRelations.forEach(element => {
     const relationArray = element[0].flat();
     nodes.push.apply(nodes, relationArray);
   });
+
+  if (!includeCenter) {
+    nodes = nodes.filter(node => node !== center);
+  }
 
   // link nodes if related to each other
   nodes.forEach(node => {
@@ -29,14 +29,14 @@ const fetchRelation = (center) => {
       
       secondLayerRelations.forEach((element, i) => {
         const relationArray = element[0].flat();
-        // const color = colors[i%colors.length];
+        const color = colors[i%colors.length];
 
-        if (!relationArray.includes(center)) {
+        if (includeCenter || !relationArray.includes(center)) {
           nodes.push.apply(nodes, relationArray);
-          secondLayerLines.push({
+          lines.push({
             "source": relationArray[0], 
             "target": relationArray[1], 
-            "stroke": 'lightblue',
+            "stroke": color,
           });
         }
       });
@@ -45,7 +45,6 @@ const fetchRelation = (center) => {
 
   nodes = Array.from(new Set(nodes));
 
-  nodes = nodes.filter(node => node !== center);
 
   const node_elements = nodes.map(node => {
     return {
@@ -54,7 +53,7 @@ const fetchRelation = (center) => {
     }
   });
 
-  return {"nodes": node_elements, "links": [...secondLayerLines]};
+  return {"nodes": node_elements, "links": [...lines]};
 }
 
 export default fetchRelation;

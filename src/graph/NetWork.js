@@ -1,10 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import fetchRelation from '../data/RelationJson';
 import * as d3 from 'd3';
-
-const data = fetchRelation('python');
-const nodesData = data.nodes;
-const linkData = data.links;
 
 const drag = simulation => {
   
@@ -33,53 +28,72 @@ const drag = simulation => {
 
 
 /* Component */
-export default function NetWork(props) {
+export default function NetWork({ nodesData, linkData, width, height }) {
 
   const d3Container = useRef(null);
 
   useEffect(() => {
     console.log(nodesData);
     if (nodesData && d3Container.current) {
-      var width=1600;
-      var height=600;
 
       const svg = d3.select(d3Container.current)
           .html("")
           .attr("viewBox", [0, 0, width, height]);
       
       const simulation = d3.forceSimulation(nodesData)
-          .force("link", d3.forceLink(linkData).id(d => d.id))
-          .force("charge", d3.forceManyBody().strength(-10))
-          .force("center", d3.forceCenter(width / 2, height / 2));
+          .force("link", d3.forceLink(linkData).id(d => d.id).distance(70))
+          .force("charge", d3.forceManyBody().strength(-5))
+          .force("center", d3.forceCenter(width / 2, height / 2).strength(0.05))
+          .force("collide", d3.forceCollide().radius(25).iterations(5));
 
       const link = svg.append("g")
-          .attr("stroke", "#999")
           .attr("stroke-opacity", 0.6)
           .selectAll("line")
           .data(linkData)
           .join("line")
-          .attr("stroke-width", d => Math.sqrt(d.value));
-       
+          .attr("stroke", d => d.color ? d.color : 'black');
+      
       const node = svg.append("g")
           .selectAll("circle")
           .data(nodesData)
           .join("circle")
           .attr("r", 5)
-          .attr("fill", 'blue')
+          .attr("fill", d => d.color)
           .call(drag(simulation));
 
       node.append("title")
           .text(d => d.name);
 
+      var texts = svg.append("g")
+          .selectAll(".text")
+          .data(nodesData)
+          .enter()
+          .append("text")
+          .attr("dy", -3)
+          .attr("fill","black")
+          .attr("font-family","sans-serif")
+          .attr("font-size","12px")
+          .text(d => d.name);
+
       simulation.on("tick", () => {
+        node.attr("transform", d => { 
+              return "translate(" + Math.max(7, Math.min(width - 7, d.x)) + "," + Math.max(7, Math.min(height - 7, d.y)) + ")"; 
+            });
+
+	      texts.attr("transform", d => { 
+          return "translate(" + Math.max(7, Math.min(width - 7, d.x)) + "," + Math.max(7, Math.min(height - 7, d.y)) + ")"; 
+        });
+
         link.attr("x1", d => d.source.x)
             .attr("y1", d => d.source.y)
             .attr("x2", d => d.target.x)
             .attr("y2", d => d.target.y);
-    
-        node.attr("cx", d => d.x)
-            .attr("cy", d => d.y);
+
       });
+
+      // node.append("text")
+      //     .attr("dy", -3)
+      //     .text(d => d.name);
 
     }
   }, [d3Container.current]);
