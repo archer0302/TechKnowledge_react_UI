@@ -47,7 +47,7 @@ export default function TagWiki() {
             {/* <TagInfo tagName={tag}/> */}
           </Grid>
           <Grid item>
-            <TrendGraph tag={tag}/>
+            <TrendGraph tag={[tag]}/>
           </Grid>
           <Grid item xs={12}>
             {/* <TopQuestions tagName={tag}/> */}
@@ -57,7 +57,7 @@ export default function TagWiki() {
       <Grid item xs={6}>
         <Grid container spacing={1} alignItems='stretch' className={classes.knowledgeGraph}>
           <Grid item xs={12}>
-            <Network nodesData={relation.nodes} linkData={relation.links} width={500} height={400}/>
+            <Network nodesData={relation.nodes} linkData={relation.links} width={700} height={560}/>
           </Grid>
         </Grid>
       </Grid>

@@ -39,10 +39,7 @@ export default function FrontPage() {
   'c#',
   'php',
   'android',
-  'html',
-  'jquery',
-  'c++',
-  'css'];
+  'c++',];
 
   let nodesData = [];
   let linkData = [];
@@ -53,8 +50,25 @@ export default function FrontPage() {
     console.log(i + ", " + colors[i]);
     let relation = fetchRelation(tag, true);
     relation.nodes.forEach(n => n.color = colors[i]);
-    nodesData = nodesData.concat(relation.nodes);
-    relation.links.forEach(n => n.color = colors[i]);
+    relation.nodes.forEach(n => {
+      // prevent duplicated nodes
+      if (!nodesData.some(d => d.name == n.name)) {
+        nodesData.push(n);
+      // If this is the main node, use the color of the cluster
+      } else if (n.name === tag) {
+        const index = nodesData.findIndex(e => e.name === tag);
+        nodesData[index] = n;
+      }
+    })
+    // nodesData = nodesData.concat(relation.nodes);
+    relation.links.forEach(n => {
+      n.color = colors[i];
+      if (top10.includes(n.source) && top10.includes(n.target)) {
+        n.distance = 400;
+      } else {
+        n.distance = 100;
+      }
+    });
     linkData = linkData.concat(relation.links);
   });
 

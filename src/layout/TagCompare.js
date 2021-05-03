@@ -22,16 +22,22 @@ export default function TagCompare() {
 
   const classes = useStyles();
 
+  const relation = fetchRelation('python', false);
+
+  const colors = d3.schemeCategory10;
+
+  relation.nodes.forEach(n => n.color = colors[0]);
+  relation.links.forEach(n => n.color = colors[0]);
+
   return (
     <Grid
       className={classes.root}
       container
-      // direction="column"
       justify="left"
-      // alignItems="stretch"
       spacing={2}
       xs={12}
     >
+      <Grid xs={1}/>
       <Grid item xs={5}>
         <Grid container spacing={4} justify='left'>
           <Grid item>
@@ -47,11 +53,26 @@ export default function TagCompare() {
           </Grid>
         </Grid>
       </Grid>
+      
+      <Grid xs={1}/>
+      <Grid xs={1}/>
 
       <Grid item xs={4}>
         <Grid item>
             <TrendGraph tag={["c#", "python"]}/>
         </Grid>
+      </Grid>
+
+      <Grid xs={1}/>
+      <Grid item xs={6}>
+        <Grid container spacing={1} alignItems='stretch' className={classes.knowledgeGraph}>
+          <Grid item xs={12}>
+            <Network nodesData={relation.nodes} linkData={relation.links} width={500} height={350}/>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        Comparison
       </Grid>
     </Grid>
   )

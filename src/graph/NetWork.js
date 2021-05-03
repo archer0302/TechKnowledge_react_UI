@@ -39,12 +39,14 @@ export default function NetWork({ nodesData, linkData, width, height }) {
       const svg = d3.select(d3Container.current)
           .html("")
           .attr("viewBox", [0, 0, width, height]);
-      
+
       const simulation = d3.forceSimulation(nodesData)
-          .force("link", d3.forceLink(linkData).id(d => d.id).distance(70))
-          .force("charge", d3.forceManyBody().strength(-5))
+          .force("link", d3.forceLink(linkData).id(d => d.id).distance(link => link.distance ? link.distance : 100))
+          .force("charge", d3.forceManyBody().strength(-50))
           .force("center", d3.forceCenter(width / 2, height / 2).strength(0.05))
-          .force("collide", d3.forceCollide().radius(25).iterations(5));
+          .force("collide", d3.forceCollide().radius(13).iterations(5))
+          .force('y', d3.forceY(height/2).strength(0.03))
+          .force('x', d3.forceX(height/2).strength(0.01));
 
       const link = svg.append("g")
           .attr("stroke-opacity", 0.6)
@@ -57,7 +59,7 @@ export default function NetWork({ nodesData, linkData, width, height }) {
           .selectAll("circle")
           .data(nodesData)
           .join("circle")
-          .attr("r", 5)
+          .attr("r", 8)
           .attr("fill", d => d.color)
           .call(drag(simulation));
 
@@ -69,10 +71,10 @@ export default function NetWork({ nodesData, linkData, width, height }) {
           .data(nodesData)
           .enter()
           .append("text")
-          .attr("dy", -3)
+          .attr("dy", -7)
           .attr("fill","black")
           .attr("font-family","sans-serif")
-          .attr("font-size","12px")
+          .attr("font-size","14px")
           .text(d => d.name);
 
       simulation.on("tick", () => {
@@ -91,16 +93,13 @@ export default function NetWork({ nodesData, linkData, width, height }) {
 
       });
 
-      // node.append("text")
-      //     .attr("dy", -3)
-      //     .text(d => d.name);
-
     }
   }, [d3Container.current]);
 
 
   return (
     <svg
+      style={{border:'1px solid grey'}}
       className="d3-component"
       ref={d3Container}
     />

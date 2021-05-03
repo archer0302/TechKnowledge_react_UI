@@ -12,9 +12,18 @@ const fetchRelation = (center, includeCenter) => {
   firstLayerRelations.sort((a, b) => b[1][0] - a[1][0]);
 
   // add all directed related nodes
-  firstLayerRelations.forEach(element => {
+  firstLayerRelations.forEach((element, i) => {
     const relationArray = element[0].flat();
     nodes.push.apply(nodes, relationArray);
+    const color = colors[i%colors.length];
+
+    if (includeCenter) {
+      lines.push({
+        "source": relationArray[0], 
+        "target": relationArray[1], 
+        "stroke": color,
+      });
+    }
   });
 
   if (!includeCenter) {
@@ -22,29 +31,30 @@ const fetchRelation = (center, includeCenter) => {
   }
 
   // link nodes if related to each other
-  nodes.forEach(node => {
-    if (node !== center && !!relation[node]) {
-      const secondLayerRelations = relation[node];
-      // let checker = (arr, target) => target.every(v => arr.includes(v));
-      
-      secondLayerRelations.forEach((element, i) => {
-        const relationArray = element[0].flat();
-        const color = colors[i%colors.length];
-
-        if (includeCenter || !relationArray.includes(center)) {
-          nodes.push.apply(nodes, relationArray);
-          lines.push({
-            "source": relationArray[0], 
-            "target": relationArray[1], 
-            "stroke": color,
-          });
-        }
-      });
-    }
-  });
+  if (!includeCenter) {
+    nodes.forEach(node => {
+      if (node !== center && !!relation[node]) {
+        const secondLayerRelations = relation[node];
+        // let checker = (arr, target) => target.every(v => arr.includes(v));
+        
+        secondLayerRelations.forEach((element, i) => {
+          const relationArray = element[0].flat();
+          const color = colors[i%colors.length];
+  
+          if (includeCenter || !relationArray.includes(center)) {
+            nodes.push.apply(nodes, relationArray);
+            lines.push({
+              "source": relationArray[0], 
+              "target": relationArray[1], 
+              "stroke": color,
+            });
+          }
+        });
+      }
+    });
+  }
 
   nodes = Array.from(new Set(nodes));
-
 
   const node_elements = nodes.map(node => {
     return {
