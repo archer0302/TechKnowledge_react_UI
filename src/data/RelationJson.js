@@ -4,6 +4,7 @@ const relation = require('./relation_0.0007_0.15.json');
 
 const colors = d3.schemeCategory10;
 
+// TODO: seperate into one center and multiple centers
 const fetchRelation = (center, includeCenter) => {
   includeCenter = includeCenter ? includeCenter : false;
   const firstLayerRelations = relation[center];

@@ -34,12 +34,14 @@ export default function FrontPage() {
   }
 
   const top10 = ['javascript',
-  'java',
-  'python',
-  'c#',
-  'php',
-  'android',
-  'c++',];
+    'java',
+    'python',
+    'c#',
+    'php',
+    'c++',
+    'ruby',
+    'sql'
+  ];
 
   let nodesData = [];
   let linkData = [];
@@ -64,7 +66,7 @@ export default function FrontPage() {
     relation.links.forEach(n => {
       n.color = colors[i];
       if (top10.includes(n.source) && top10.includes(n.target)) {
-        n.distance = 400;
+        n.distance = 300;
       } else {
         n.distance = 100;
       }
@@ -103,7 +105,7 @@ export default function FrontPage() {
         </div>
       </form>
       <div style={{alignItems: 'center', display:'flex', flexDirection: 'column'}}>
-        <NetWork nodesData={nodesData} linkData={linkData} width={1600} height={700} force={[0.03, 0.01]}/>
+        <NetWork nodesData={nodesData} linkData={linkData} width={1600} height={700} forceXY={[0.005, 0.03]} cluster={top10.length}/>
       </div>
     </div>
   )
