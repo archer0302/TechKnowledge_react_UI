@@ -103,7 +103,7 @@ export default function FrontPage() {
         </div>
       </form>
       <div style={{alignItems: 'center', display:'flex', flexDirection: 'column'}}>
-        <NetWork nodesData={nodesData} linkData={linkData} width={1600} height={700} />
+        <NetWork nodesData={nodesData} linkData={linkData} width={1600} height={700} force={[0.03, 0.01]}/>
       </div>
     </div>
   )
