@@ -4,22 +4,23 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import axios from 'axios';
+import * as he from 'he';
 
 
 function TopQuestions({tagName}) {
   const [faqs, setFaqs] = useState([]);
 
-  console.log(tagName);
+  console.log("top question: " + tagName);
   useEffect(() => {
     axios.get("https://api.stackexchange.com/2.2/tags/" + tagName + "/faq?site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
       .then(res => res.data.items)
       .catch(error => console.log(error))
       .then(
         (result) => {
-          setFaqs(result);
+          setFaqs(result.slice(0, 5));
         }
       )
-  });
+  }, [tagName]);
 
   return (
     <Card>
@@ -27,10 +28,10 @@ function TopQuestions({tagName}) {
         <Typography variant='h4'>
           Top Questions
         </Typography>
-        {faqs.slice(0, 5).map((faq) =>
-          <Typography variant='body1'>
+        {faqs.map((faq, i) =>
+          <Typography variant='body1' key={i}>
             <Link href={faq.link}>
-              {faq.title}
+              {he.decode(String(faq.title))}
             </Link>
           </Typography>
         )}

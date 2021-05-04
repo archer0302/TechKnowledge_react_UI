@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,6 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TagWiki from './layout/TagWiki';
 import TagCompare from './layout/TagCompare';
 import FrontPage from './layout/FrontPage';
+import { Link } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 
@@ -56,9 +57,14 @@ function App() {
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
-            <Typography variant="h6" noWrap>
-              TechKnowledge
-            </Typography>
+            <ListItem button component={Link} to='/'>
+              <ListItemText primary={'TechKnowledge'} />
+            </ListItem>
+            {/* <Link to="/" style={{ textDecoration: 'none' }}>
+              <Typography variant="h6" noWrap>
+                TechKnowledge
+              </Typography>
+            </Link> */}
           </Toolbar>
         </AppBar>
 
@@ -74,11 +80,12 @@ function App() {
           <Toolbar />
           <div className={classes.drawerContainer}>
             <List>
-              {['TechWiki', 'TechCompare'].map((text, index) => (
-                <ListItem button key={text}>
-                  <ListItemText primary={text} />
-                </ListItem>
-              ))}
+              <ListItem button component={Link} to='/TagWiki/python'>
+                <ListItemText primary={'TechWiki'} />
+              </ListItem>
+              <ListItem button component={Link} to="/TagCompare">
+                <ListItemText primary={'TechCompare'} />
+              </ListItem>
             </List>
           </div>
         </Drawer>

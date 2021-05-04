@@ -8,6 +8,7 @@ import * as he from 'he';
 function TagInfo({tagName}) {
   const [excerpt, setExcerpt] = useState([]);
 
+  console.log("tag info: " + tagName);
   useEffect(() => {
     axios.get("https://api.stackexchange.com/2.2/tags/" + encodeURIComponent(tagName) + "/wikis?site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
       .then(res => res.data.items[0])
@@ -18,7 +19,7 @@ function TagInfo({tagName}) {
           setExcerpt(result.excerpt);
         }
       )
-  })
+  }, [tagName]);
 
   return (
     <Card>
@@ -27,7 +28,7 @@ function TagInfo({tagName}) {
           {tagName}
         </Typography>
         <Typography variant='body1'>
-          {he.decode(excerpt)}
+          {he.decode(String(excerpt))}
         </Typography>
       </CardContent>
     </Card>
