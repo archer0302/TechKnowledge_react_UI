@@ -51,6 +51,7 @@ export default function TagWiki() {
       <Grid item xs={5}>
         <Grid container spacing={1} alignItems='stretch' className={classes.knowledgeGraph}>
           <Grid item xs={12}>
+            {/* <NetworkGraph center={tag} /> */}
             <Network nodesData={relation.nodes} linkData={relation.links} 
             width={700} height={560} nodeStrength={-32} iter={10}
             centerForce={0.05}/>
