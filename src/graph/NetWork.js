@@ -28,7 +28,7 @@ const drag = simulation => {
 
 
 /* Component */
-export default function NetWork({ nodesData, linkData, width, height, forceXY }) {
+export default function NetWork({ nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce }) {
 
   const d3Container = useRef(null);
 
@@ -44,13 +44,13 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY })
           .force("link", d3.forceLink(linkData).id(d => d.id)
                                                .distance(link => link.distance ? link.distance : 100)
                                                .strength(0.3))
-          .force("charge", d3.forceManyBody().strength(-40))
-          .force("center", d3.forceCenter(width / 2, height / 2).strength(0.05))
+          .force("charge", d3.forceManyBody().strength(nodeStrength ? nodeStrength : -40))
+          .force("center", d3.forceCenter(width / 2, height / 2).strength(centerForce ? centerForce : 0.05))
           .force('x', d3.forceX(height/2)
-                        .strength(forceXY ? forceXY[0] : 0.05))
+                        .strength(forceXY ? forceXY[0] : 0.001))
           .force('y', d3.forceY(height/2)
-                        .strength(forceXY ? forceXY[1] : 0.05))
-          .force("collide", d3.forceCollide().radius(13).iterations(1));
+                        .strength(forceXY ? forceXY[1] : 0.001))
+          .force("collide", d3.forceCollide().radius(13).iterations(iter ? iter : 1));
 
       const link = svg.append("g")
           .attr("stroke-opacity", 0.6)
@@ -98,7 +98,7 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY })
       });
 
     }
-  }, [d3Container, nodesData, linkData, width, height, forceXY]);
+  }, [d3Container, nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce]);
 
 
   return (

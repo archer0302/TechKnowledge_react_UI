@@ -6,8 +6,7 @@ import TrendGraph from '../graph/TrendGraph';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from "react-router-dom";
-import fetchRelation from '../data/RelationJson';
-import * as d3 from 'd3';
+import { fetchSingleRelation } from '../data/RelationJson';
 
 export default function TagWiki() {
 
@@ -24,12 +23,7 @@ export default function TagWiki() {
 
   const { tag } = useParams();
 
-  const relation = fetchRelation(tag, false);
-
-  const colors = d3.schemeCategory10;
-
-  relation.nodes.forEach(n => n.color = colors[0]);
-  relation.links.forEach(n => n.color = colors[0]);
+  const relation = fetchSingleRelation(tag, false);
 
   return (
     <Grid
@@ -57,7 +51,9 @@ export default function TagWiki() {
       <Grid item xs={6}>
         <Grid container spacing={1} alignItems='stretch' className={classes.knowledgeGraph}>
           <Grid item xs={12}>
-            <Network nodesData={relation.nodes} linkData={relation.links} width={700} height={560}/>
+            <Network nodesData={relation.nodes} linkData={relation.links} 
+            width={700} height={560} nodeStrength={-32} iter={10}
+            centerForce={0.05}/>
           </Grid>
         </Grid>
       </Grid>

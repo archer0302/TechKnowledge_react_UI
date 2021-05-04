@@ -6,7 +6,7 @@ import TagInfo from '../grid/TagInfo';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 // import { useParams } from "react-router-dom";
-import fetchRelation from '../data/RelationJson';
+import { fetchRelation } from '../data/RelationJson';
 import * as d3 from 'd3';
 
 export default function TagCompare() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import NetWork from '../graph/NetWork';
-import fetchRelation from '../data/RelationJson';
+import { fetchRelation } from '../data/RelationJson';
 import SearchForm from '../grid/SearchForm';
 import * as d3 from 'd3';
 
@@ -21,7 +21,6 @@ export default function FrontPage() {
   const colors = d3.schemeCategory10;
 
   top10.forEach((tag, i) => {
-    console.log(i + ", " + colors[i]);
     let relation = fetchRelation(tag, true);
     relation.nodes.forEach(n => n.color = colors[i]);
     relation.nodes.forEach(n => {
@@ -50,7 +49,7 @@ export default function FrontPage() {
     <div>
       <SearchForm />
       <div style={{alignItems: 'center', display:'flex', flexDirection: 'column'}}>
-        <NetWork nodesData={nodesData} linkData={linkData} width={1600} height={700} forceXY={[0.005, 0.035]} cluster={top10.length}/>
+        <NetWork nodesData={nodesData} linkData={linkData} width={1600} height={700} forceXY={[0.005, 0.035]}/>
       </div>
     </div>
   )

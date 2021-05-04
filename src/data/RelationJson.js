@@ -4,8 +4,60 @@ const relation = require('./relation_0.0007_0.15.json');
 
 const colors = d3.schemeCategory10;
 
+export const fetchSingleRelation = (center) => {
+  const firstLayerRelations = relation[center];
+  let nodes = [];
+  const lines = [];
+  firstLayerRelations.sort((a, b) => b[1][0] - a[1][0]);
+
+  // add all directed related nodes
+  firstLayerRelations.forEach((element, i) => {
+    nodes.push.apply(nodes, element[0].flat());
+  });
+
+  nodes = nodes.filter(node => node !== center);
+  const node_elements = [];
+
+  nodes.forEach((node, i) => {
+    if (node !== center && !!relation[node]) {
+      const secondLayerRelations = relation[node];
+      const color = colors[i%colors.length];
+      
+      secondLayerRelations.forEach(element => {
+        const relationArray = element[0].flat();
+        
+        let newNode = false;
+        if (!relationArray.some(r => r === center)) {
+          relationArray.forEach(e => {
+            if (!node_elements.some(n => n.name === e) && e !== center) {
+              node_elements.push({
+                "id": e,
+                "name": e,
+                "color": color
+              });
+              newNode = true;
+            }
+          });
+        }
+
+        if (newNode) {
+          lines.push({
+            "source": relationArray[0], 
+            "target": relationArray[1], 
+            "stroke": color,
+          });
+        }
+
+      });
+    }
+  });
+
+
+  return {"nodes": node_elements, "links": lines};
+}
+
 // TODO: seperate into one center and multiple centers
-const fetchRelation = (center, includeCenter) => {
+export const fetchRelation = (center, includeCenter) => {
   includeCenter = includeCenter ? includeCenter : false;
   const firstLayerRelations = relation[center];
   let nodes = [];
@@ -66,5 +118,3 @@ const fetchRelation = (center, includeCenter) => {
 
   return {"nodes": node_elements, "links": [...lines]};
 }
-
-export default fetchRelation;
