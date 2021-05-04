@@ -11,7 +11,7 @@ function TopQuestions({tagName}) {
 
   console.log(tagName);
   useEffect(() => {
-    axios.get("https://api.stackexchange.com/2.2/tags/" + tagName + "/faq?site=stackoverflow")
+    axios.get("https://api.stackexchange.com/2.2/tags/" + tagName + "/faq?site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
       .then(res => res.data.items)
       .catch(error => console.log(error))
       .then(

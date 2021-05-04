@@ -57,7 +57,7 @@ function App() {
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             <Typography variant="h6" noWrap>
-              TechLand
+              TechKnowledge
             </Typography>
           </Toolbar>
         </AppBar>

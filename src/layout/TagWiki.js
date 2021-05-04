@@ -1,8 +1,8 @@
 import React from 'react';
 import Network from '../graph/NetWork';
 import TrendGraph from '../graph/TrendGraph';
-// import TagInfo from '../grid/TagInfo';
-// import TopQuestions from '../grid/TopQuestions';
+import TagInfo from '../grid/TagInfo';
+import TopQuestions from '../grid/TopQuestions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from "react-router-dom";
@@ -35,20 +35,20 @@ export default function TagWiki() {
       spacing={2}
       xs={12}
     >
-      <Grid item xs={5}>
+      <Grid item xs={6}>
         <Grid container spacing={4} justify='left'>
           <Grid item>
-            {/* <TagInfo tagName={tag}/> */}
+            <TagInfo tagName={tag}/>
           </Grid>
           <Grid item>
             <TrendGraph tag={[tag]}/>
           </Grid>
           <Grid item xs={12}>
-            {/* <TopQuestions tagName={tag}/> */}
+            <TopQuestions tagName={tag}/>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Grid container spacing={1} alignItems='stretch' className={classes.knowledgeGraph}>
           <Grid item xs={12}>
             <Network nodesData={relation.nodes} linkData={relation.links} 
