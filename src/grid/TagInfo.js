@@ -3,12 +3,13 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
+import * as he from 'he';
 
 function TagInfo({tagName}) {
   const [excerpt, setExcerpt] = useState([]);
 
   useEffect(() => {
-    axios.get("https://api.stackexchange.com/2.2/tags/" + tagName + "/wikis?site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
+    axios.get("https://api.stackexchange.com/2.2/tags/" + encodeURIComponent(tagName) + "/wikis?site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
       .then(res => res.data.items[0])
       .catch(error => console.log(error))
       .then(
@@ -26,7 +27,7 @@ function TagInfo({tagName}) {
           {tagName}
         </Typography>
         <Typography variant='body1'>
-          {String(excerpt)}
+          {he.decode(excerpt)}
         </Typography>
       </CardContent>
     </Card>
