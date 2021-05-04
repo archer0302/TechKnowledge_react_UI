@@ -2,10 +2,10 @@ import React from 'react';
 import Network from '../graph/NetWork';
 import TrendGraph from '../graph/TrendGraph';
 import TagInfo from '../grid/TagInfo';
-import TopQuestions from '../grid/TopQuestions';
+// import TopQuestions from '../grid/TopQuestions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import fetchRelation from '../data/RelationJson';
 import * as d3 from 'd3';
 

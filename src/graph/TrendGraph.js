@@ -9,6 +9,8 @@ function TrendGraph({tag}) {
   const dataArray = tag.map(t => ({'name': t, 'data': fetchTrendGraph(t)}));
   dataArray.sort((a, b) => b.data.length - a.data.length);
 
+  
+
   return (
     <LineChart width={550} height={300}>
       {dataArray.map((s, index) => (

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import axios from 'axios';
+// import axios from 'axios';
 
 function TagInfo({tagName}) {
-  const [excerpt, setExcerpt] = useState([]);
+  // const [excerpt, setExcerpt] = useState([]);
 
   // useEffect(() => {
   //   axios.get("https://api.stackexchange.com/2.2/tags/" + tagName + "/wikis?site=stackoverflow")

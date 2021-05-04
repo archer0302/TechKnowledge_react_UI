@@ -28,7 +28,7 @@ const drag = simulation => {
 
 
 /* Component */
-export default function NetWork({ nodesData, linkData, width, height, cluster, forceXY }) {
+export default function NetWork({ nodesData, linkData, width, height, forceXY }) {
 
   const d3Container = useRef(null);
 
@@ -41,7 +41,9 @@ export default function NetWork({ nodesData, linkData, width, height, cluster, f
           .attr("viewBox", [0, 0, width, height]);
 
       const simulation = d3.forceSimulation(nodesData)
-          .force("link", d3.forceLink(linkData).id(d => d.id).distance(link => link.distance ? link.distance : 100))
+          .force("link", d3.forceLink(linkData).id(d => d.id)
+                                               .distance(link => link.distance ? link.distance : 100)
+                                               .strength(0.3))
           .force("charge", d3.forceManyBody().strength(-40))
           .force("center", d3.forceCenter(width / 2, height / 2).strength(0.05))
           .force('x', d3.forceX(height/2)
@@ -96,7 +98,7 @@ export default function NetWork({ nodesData, linkData, width, height, cluster, f
       });
 
     }
-  }, [d3Container.current]);
+  }, [d3Container, nodesData, linkData, width, height, forceXY]);
 
 
   return (

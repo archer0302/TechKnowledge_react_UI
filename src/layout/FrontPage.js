@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import NetWork from '../graph/NetWork';
 import fetchRelation from '../data/RelationJson';
 import SearchForm from '../grid/SearchForm';
@@ -26,7 +26,7 @@ export default function FrontPage() {
     relation.nodes.forEach(n => n.color = colors[i]);
     relation.nodes.forEach(n => {
       // prevent duplicated nodes
-      if (!nodesData.some(d => d.name == n.name)) {
+      if (!nodesData.some(d => d.name === n.name)) {
         nodesData.push(n);
       // If this is the main node, use the color of the cluster
       } else if (n.name === tag) {
@@ -50,7 +50,7 @@ export default function FrontPage() {
     <div>
       <SearchForm />
       <div style={{alignItems: 'center', display:'flex', flexDirection: 'column'}}>
-        <NetWork nodesData={nodesData} linkData={linkData} width={1600} height={700} forceXY={[0.005, 0.03]} cluster={top10.length}/>
+        <NetWork nodesData={nodesData} linkData={linkData} width={1600} height={700} forceXY={[0.005, 0.035]} cluster={top10.length}/>
       </div>
     </div>
   )
