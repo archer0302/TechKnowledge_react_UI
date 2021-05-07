@@ -24,7 +24,7 @@ export default function TagWiki() {
   const { tag } = useParams();
 
   const relation = fetchSingleRelation(tag, false);
-
+  
   return (
     <Grid
       className={classes.root}
@@ -41,7 +41,7 @@ export default function TagWiki() {
             <TagInfo tagName={tag}/>
           </Grid>
           <Grid item>
-            <TrendGraph tag={[tag]}/>
+            <TrendGraph tags={[tag]}/>
           </Grid>
           <Grid item xs={12}>
             <TopQuestions tagName={tag}/>
@@ -53,7 +53,7 @@ export default function TagWiki() {
           <Grid item xs={12}>
             {/* <NetworkGraph center={tag} /> */}
             <Network nodesData={relation.nodes} linkData={relation.links} 
-            width={700} height={560} nodeStrength={-32} iter={10}
+            width={500} height={480} nodeStrength={-32} iter={10}
             centerForce={0.05}/>
           </Grid>
         </Grid>

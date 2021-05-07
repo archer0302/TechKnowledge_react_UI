@@ -38,6 +38,7 @@ function App() {
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
+      background: '#EBEBE9'
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,

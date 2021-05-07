@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-const relation = require('./relation_0.0007_0.15.json');
+const relation = require('./relation.json');
 
 const colors = d3.schemeCategory10;
 
