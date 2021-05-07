@@ -3,7 +3,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
+import LabelRounded from '@material-ui/icons/LabelRounded';
 import * as he from 'he';
+import { Icon } from '@material-ui/core';
 
 function TagInfo({tagName}) {
   const [excerpt, setExcerpt] = useState([]);
@@ -23,7 +25,12 @@ function TagInfo({tagName}) {
 
   return (
     <Card>
-      <CardContent>
+      <CardContent style={{
+          display: 'flex',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+      }}>
+        <LabelRounded fontSize='large' style={{ marginRight:'10px' }}/>
         <Typography variant='h4'>
           {tagName}
         </Typography>

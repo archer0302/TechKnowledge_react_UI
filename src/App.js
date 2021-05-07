@@ -32,17 +32,18 @@ function App() {
       flexShrink: 0
     },
     drawerPaper: {
-      background: '#BFD7ED',
+      background: '#212428',
+      color: '#96958F',
       width: drawerWidth,
     },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
-      background: '#EBEBE9'
+      background: '#F6F4F6'
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
-      background: '#003B73'
+      background: '#212428'
     },
     drawerContainer: {
       overflow: 'auto',
