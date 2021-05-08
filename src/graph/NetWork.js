@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 const drag = simulation => {
   
   function dragstarted(event) {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
+    if (!event.active) simulation.alphaTarget(0.05).restart();
     event.subject.fx = event.subject.x;
     event.subject.fy = event.subject.y;
   }
@@ -57,6 +57,7 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
         .selectAll("line")
         .data(linkData)
         .join("line")
+        .attr("stroke-width", 2)
         .attr("stroke", d => d.stroke ? d.stroke : 'black');
     
       const node = svg.append("g")
@@ -65,6 +66,8 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
         .join("circle")
         .attr("r", 8)
         .attr("fill", d => d.color)
+        .attr('stroke', 'white')
+        .attr("stroke-width", 2)
         .call(drag(simulation));
 
       node.append("title")

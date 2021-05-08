@@ -31,7 +31,7 @@ function TagInfo({tagName}) {
           flexWrap: 'wrap',
       }}>
         <LabelRounded fontSize='large' style={{ marginRight:'10px' }}/>
-        <Typography variant='h4'>
+        <Typography variant='h4' style={{ marginBottom: '10px' }}>
           {tagName}
         </Typography>
         <Typography variant='body1'>

@@ -83,7 +83,7 @@ export default function TagCompare() {
 
       <Grid item xs={5}>
         <Grid item>
-            <TrendGraph tag={["c#", "python"]}/>
+            <TrendGraph width={500} height={400} tag={["c#", "python"]}/>
         </Grid>
       </Grid>
 

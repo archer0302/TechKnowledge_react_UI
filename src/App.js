@@ -13,6 +13,7 @@ import TagCompare from './layout/TagCompare';
 import FrontPage from './layout/FrontPage';
 import { Link } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Container } from '@material-ui/core';
 
 
 
@@ -39,7 +40,7 @@ function App() {
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
-      background: '#F6F4F6'
+      background: '#e7e7e7'
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
@@ -71,7 +72,7 @@ function App() {
         </AppBar>
 
         {/* Menu drawer */}
-        <Drawer
+        {/* <Drawer
           className={classes.drawer}
           variant="permanent"
           classes={{
@@ -90,11 +91,12 @@ function App() {
               </ListItem>
             </List>
           </div>
-        </Drawer>
+        </Drawer> */}
 
         {/* Main content */}
         <main className={classes.content}>
-          <Toolbar/>
+          <Container maxWidth='lg'>
+            <Toolbar/>
             <Switch>
               <Route path='/TagCompare'>
                 <TagCompare />
@@ -106,6 +108,7 @@ function App() {
                 <FrontPage />
               </Route>
             </Switch>
+          </Container>
         </main>
       </Router>
     </div>

@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from "react-router-dom";
 import { fetchSingleRelation } from '../data/RelationJson';
+import { CardContent, Card } from '@material-ui/core';
 
 export default function TagWiki() {
 
@@ -35,27 +36,29 @@ export default function TagWiki() {
       spacing={2}
       xs={12}
     >
+      <Grid item xs={12}>
+        <TagInfo tagName={tag}/>
+      </Grid>
       <Grid item xs={6}>
-        <Grid container spacing={4} justify='left'>
-          <Grid item>
-            <TagInfo tagName={tag}/>
-          </Grid>
-          <Grid item>
-            <TrendGraph tags={[tag]}/>
+        <Grid container direction='column' spacing={2}>
+          <Grid item xs={12}>
+            <TrendGraph height={350} tags={[tag]}/>
           </Grid>
           <Grid item xs={12}>
             <TopQuestions tagName={tag}/>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={5}>
-        <Grid container spacing={1} alignItems='stretch' className={classes.knowledgeGraph}>
-          <Grid item xs={12}>
-            {/* <NetworkGraph center={tag} /> */}
+      <Grid item xs={6}>
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
             <Network nodesData={relation.nodes} linkData={relation.links} 
-            width={500} height={480} nodeStrength={-32} iter={10}
-            centerForce={0.05}/>
-          </Grid>
+              width={500} height={500 } nodeStrength={-32} iter={1}
+              centerForce={0.05}
+            />
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
     </Grid>
