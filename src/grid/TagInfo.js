@@ -30,14 +30,14 @@ function TagInfo({tagName}) {
       {...(ready ? { timeout: 1000 } : {})}>
       <Card>
         <CardContent style={{
-            display: 'flex',
-            alignItems: 'center',
             flexWrap: 'wrap',
         }}>
-          <LabelRounded fontSize='large' style={{ marginRight:'10px' }}/>
-          <Typography variant='h4' style={{ marginBottom: '10px' }}>
-            {tagName}
-          </Typography>
+          <div style={{ display: 'flex', alignItems: 'center'}}>
+            <LabelRounded fontSize='large' style={{ marginRight:'10px' }}/>
+            <Typography variant='h4' style={{ marginBottom: '10px' }}>
+              {tagName}
+            </Typography>
+          </div>
           <Typography variant='body1'>
             {he.decode(String(excerpt))}
           </Typography>
