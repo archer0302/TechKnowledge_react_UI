@@ -39,7 +39,7 @@ export default function TagWiki() {
       <Grid item xs={12}>
         <TagInfo tagName={tag}/>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         <Grid container direction='column' spacing={2}>
           <Grid item xs={12}>
             <TrendGraph height={350} tags={[tag]}/>
@@ -49,15 +49,15 @@ export default function TagWiki() {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Grid item xs={12}>
           <Card>
-            <CardContent>
-            <Network nodesData={relation.nodes} linkData={relation.links} 
-              width={500} height={500 } nodeStrength={-32} iter={1}
-              centerForce={0.05}
-            />
-            </CardContent>
+            {/* <CardContent> */}
+              <Network nodesData={relation.nodes} linkData={relation.links} 
+                width={500} height={500 } nodeStrength={-32} iter={1}
+                centerForce={0.05}
+              />
+            {/* </CardContent> */}
           </Card>
         </Grid>
       </Grid>

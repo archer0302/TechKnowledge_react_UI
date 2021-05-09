@@ -10,13 +10,13 @@ function TrendGraph({height, tags}) {
   const data = fetchTrendGraph(tags);
   console.log(data);
   return (
-    <Card>
-      <CardContent>
-        <Typography>
+    <Card style={{background: 'transparent'}}>
+      {/* <CardContent> */}
+        {/* <Typography variant='h5'>
           {tags} trend on StackOverflow.com
-        </Typography>
+        </Typography> */}
         <ResponsiveContainer width="100%" height={height}>
-          <AreaChart data={data}>
+          <AreaChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
             <defs>
               {Object.keys(data[0]).map((tag, index) => {
                 if (tag !== 'ym') {
@@ -43,14 +43,14 @@ function TrendGraph({height, tags}) {
               return ('');
               })
             }
-            <CartesianGrid stroke="#ccc" strokeDashArray="3 8 "/>
-            <XAxis dataKey="ym" tickFormatter={d => d.slice(-4)}/>
-            <YAxis />
-            <Legend />
+            <CartesianGrid stroke="#ccc" strokeDashArray="3 8 " vertical={false}/>
+            <XAxis dataKey="ym" tickFormatter={d => d.slice(-4)} angle={20} mirror={true} tickLine={false}/>
+            <YAxis mirror={true} tickLine={false} tickFormatter={d => d == 0 ? '' : d}  />
+            { tags.length > 1 ? (<Legend />) : ('') }
             <Tooltip />
           </AreaChart>  
         </ResponsiveContainer>
-      </CardContent>
+      {/* </CardContent> */}
     </Card>
   )
 }

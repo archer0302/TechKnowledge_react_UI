@@ -38,9 +38,10 @@ function App() {
       width: drawerWidth,
     },
     content: {
+      height: '100vh',
       flexGrow: 1,
       padding: theme.spacing(3),
-      background: '#e7e7e7'
+      background: '#e7e7e7',
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,

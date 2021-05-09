@@ -105,7 +105,7 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
 
   return (
     <svg
-      style={{border:'1px solid grey'}}
+      // style={{border:'1px solid grey'}}
       className="d3-component"
       ref={d3Container}
     />
