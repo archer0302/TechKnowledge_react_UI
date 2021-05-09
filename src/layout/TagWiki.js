@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from "react-router-dom";
 import { fetchSingleRelation } from '../data/RelationJson';
-import { CardContent, Card } from '@material-ui/core';
+import { CardContent, Card, Grow } from '@material-ui/core';
 
 export default function TagWiki() {
 

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import { CardContent, Typography, Grow } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
 import axios from 'axios';
 import * as he from 'he';
@@ -9,6 +7,7 @@ import * as he from 'he';
 
 function TopQuestions({tagName}) {
   const [faqs, setFaqs] = useState([]);
+  const [ready, setReady] = useState(false);
 
   console.log("top question: " + tagName);
   useEffect(() => {
@@ -18,15 +17,17 @@ function TopQuestions({tagName}) {
       .then(
         (result) => {
           setFaqs(result.slice(0, 5));
+          setReady(true);
         }
       )
   }, [tagName]);
 
   return (
-    <Card>
+    <Grow in={ready}
+      {...(ready ? { timeout: 1000 } : {})}>
       <CardContent>
-        <Typography variant='h4'>
-          Top Questions
+        <Typography variant='h5'>
+          Top Questions on StackOverflow
         </Typography>
         {faqs.map((faq, i) =>
           <Typography variant='body1' key={i}>
@@ -36,7 +37,7 @@ function TopQuestions({tagName}) {
           </Typography>
         )}
       </CardContent>
-    </Card>
+    </Grow>
   )
 }
 

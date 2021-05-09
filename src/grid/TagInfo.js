@@ -5,10 +5,11 @@ import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import LabelRounded from '@material-ui/icons/LabelRounded';
 import * as he from 'he';
-import { Icon } from '@material-ui/core';
+import { Grow, Icon } from '@material-ui/core';
 
 function TagInfo({tagName}) {
   const [excerpt, setExcerpt] = useState([]);
+  const [ready, setReady] = useState(false);
 
   console.log("tag info: " + tagName);
   useEffect(() => {
@@ -19,26 +20,30 @@ function TagInfo({tagName}) {
         (result) => {
           console.log(result);
           setExcerpt(result.excerpt);
+          setReady(true);
         }
       )
   }, [tagName]);
 
   return (
-    <Card>
-      <CardContent style={{
-          display: 'flex',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-      }}>
-        <LabelRounded fontSize='large' style={{ marginRight:'10px' }}/>
-        <Typography variant='h4' style={{ marginBottom: '10px' }}>
-          {tagName}
-        </Typography>
-        <Typography variant='body1'>
-          {he.decode(String(excerpt))}
-        </Typography>
-      </CardContent>
-    </Card>
+    <Grow in={ready}
+      {...(ready ? { timeout: 1000 } : {})}>
+      <Card>
+        <CardContent style={{
+            display: 'flex',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+        }}>
+          <LabelRounded fontSize='large' style={{ marginRight:'10px' }}/>
+          <Typography variant='h4' style={{ marginBottom: '10px' }}>
+            {tagName}
+          </Typography>
+          <Typography variant='body1'>
+            {he.decode(String(excerpt))}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Grow>
   )
 }
 
