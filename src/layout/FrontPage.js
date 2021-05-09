@@ -47,9 +47,8 @@ export default function FrontPage() {
 
   return (
     <div>
-      <SearchForm />
       <div style={{alignItems: 'center', display:'flex', flexDirection: 'column'}}>
-        <NetWork nodesData={nodesData} linkData={linkData} width={1600} height={700} forceXY={[0.005, 0.035]}/>
+        <NetWork nodesData={nodesData} linkData={linkData} width={1500} height={900} forceXY={[0.005, 0.035]}/>
       </div>
     </div>
   )

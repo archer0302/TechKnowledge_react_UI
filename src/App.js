@@ -1,19 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-// import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
 import TagWiki from './layout/TagWiki';
 import TagCompare from './layout/TagCompare';
 import FrontPage from './layout/FrontPage';
-import { Link } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from '@material-ui/core';
+import SearchForm from './grid/SearchForm';
 
 
 
@@ -45,10 +41,17 @@ function App() {
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
-      background: '#212428'
+      // background: '#212428',
+      background: '#121212'
     },
     drawerContainer: {
       overflow: 'auto',
+    },
+    title: {
+      display: 'none',
+      [theme.breakpoints.up('sm')]: {
+        display: 'block',
+      },
     }
   }));
 
@@ -61,38 +64,16 @@ function App() {
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
-            <ListItem button component={Link} to='/'>
-              <ListItemText primary={'TechKnowledge'} />
-            </ListItem>
-            {/* <Link to="/" style={{ textDecoration: 'none' }}>
-              <Typography variant="h6" noWrap>
-                TechKnowledge
-              </Typography>
-            </Link> */}
+            <Typography variant='h6' noWrap>
+              TechKnowledge
+            </Typography>
+            {/* <ListItem button component={Link} to='/'>
+              <ListItemText primary={''} />
+            </ListItem> */}
+            <SearchForm />
           </Toolbar>
         </AppBar>
-
-        {/* Menu drawer */}
-        {/* <Drawer
-          className={classes.drawer}
-          variant="permanent"
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-
-          <Toolbar />
-          <div className={classes.drawerContainer}>
-            <List>
-              <ListItem button component={Link} to='/TagWiki/python'>
-                <ListItemText primary={'TechWiki'} />
-              </ListItem>
-              <ListItem button component={Link} to="/TagCompare">
-                <ListItemText primary={'TechCompare'} />
-              </ListItem>
-            </List>
-          </div>
-        </Drawer> */}
+        
 
         {/* Main content */}
         <main className={classes.content}>

@@ -32,9 +32,9 @@ function TagInfo({tagName}) {
         <CardContent style={{
             flexWrap: 'wrap',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center'}}>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px'}}>
             <LabelRounded fontSize='large' style={{ marginRight:'10px' }}/>
-            <Typography variant='h4' style={{ marginBottom: '10px' }}>
+            <Typography variant='h4'>
               {tagName}
             </Typography>
           </div>

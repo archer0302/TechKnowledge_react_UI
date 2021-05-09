@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 const drag = simulation => {
   
   function dragstarted(event) {
-    if (!event.active) simulation.alphaTarget(0.05).restart();
+    if (!event.active) simulation.alphaTarget(0.07).restart();
     event.subject.fx = event.subject.x;
     event.subject.fy = event.subject.y;
   }
