@@ -41,8 +41,7 @@ function App() {
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
-      // background: '#212428',
-      background: '#121212'
+      background: '#121212',
     },
     drawerContainer: {
       overflow: 'auto',
@@ -64,12 +63,9 @@ function App() {
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
-            <Typography variant='h6' noWrap>
+            <Typography variant='h6' noWrap className={classes.title}>
               TechKnowledge
             </Typography>
-            {/* <ListItem button component={Link} to='/'>
-              <ListItemText primary={''} />
-            </ListItem> */}
             <SearchForm />
           </Toolbar>
         </AppBar>

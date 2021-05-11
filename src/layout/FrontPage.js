@@ -21,7 +21,7 @@ export default function FrontPage() {
   const colors = d3.schemeCategory10;
 
   top10.forEach((tag, i) => {
-    let relation = fetchRelation(tag, true);
+    let relation = fetchRelation(tag, true, i);
     relation.nodes.forEach(n => n.color = colors[i]);
     relation.nodes.forEach(n => {
       // prevent duplicated nodes

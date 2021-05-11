@@ -20,10 +20,10 @@ export default function SearchForm() {
       borderRadius: theme.shape.borderRadius,
       marginRight: theme.spacing(2),
       marginLeft: 0,
-      width: '300px !important',
+      width: '160px',
       [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(3),
-        width: 'auto',
+        width: '200px',
       },
     },
     inputRoot: {
@@ -32,11 +32,10 @@ export default function SearchForm() {
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
       transition: theme.transitions.create('width'),
       width: '100%',
-      [theme.breakpoints.up('md')]: {
+      [theme.breakpoints.up('sm')]: {
         width: '20ch',
       },
     },
@@ -75,10 +74,12 @@ export default function SearchForm() {
             options={tag_list}
             classes={classes}
             size="small"
+            freeSolo
             renderInput={(params) => (
               <TextField {...params} 
                 placeholder="search..." 
                 variant="outlined" 
+                type='search'
               />
             )}
           />
@@ -89,23 +90,6 @@ export default function SearchForm() {
           </Button>
         </div>
       </div>
-      {/* <div>
-        <Autocomplete
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-          style={{width: 300}}
-          id="free-solo-demo"
-          filterOptions={filterOptions}
-          options={tag_list}
-          size="small"
-          renderInput={(params) => (
-            <TextField {...params} label="search..." margin="normal" variant="outlined" 
-            style={{ background: 'white', marginLeft: '10px' }}/>
-          )}
-        />
-      </div> */}
       
       <div style={{marginLeft: '10px'}}>
         {(notFound && !!alert) ? <Alert severity="error">Tag {alert} not found.</Alert> : ''}

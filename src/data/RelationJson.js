@@ -57,18 +57,18 @@ export const fetchSingleRelation = (center) => {
 }
 
 // TODO: seperate into one center and multiple centers
-export const fetchRelation = (center, includeCenter) => {
+export const fetchRelation = (center, includeCenter, i) => {
   includeCenter = includeCenter ? includeCenter : false;
   const firstLayerRelations = relation[center];
   let nodes = [];
   const lines = [];
   firstLayerRelations.sort((a, b) => b[1][0] - a[1][0]);
+  const color = colors[i%colors.length];
 
   // add all directed related nodes
   firstLayerRelations.forEach((element, i) => {
     const relationArray = element[0].flat();
     nodes.push.apply(nodes, relationArray);
-    const color = colors[i%colors.length];
 
     if (includeCenter) {
       lines.push({
