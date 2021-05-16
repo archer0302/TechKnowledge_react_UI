@@ -1,7 +1,6 @@
 import React from 'react';
 import NetWork from '../graph/NetWork';
 import { fetchRelation } from '../data/RelationJson';
-import SearchForm from '../grid/SearchForm';
 import * as d3 from 'd3';
 
 export default function FrontPage() {

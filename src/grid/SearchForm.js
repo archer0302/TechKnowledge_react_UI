@@ -5,7 +5,7 @@ import Alert from '@material-ui/lab/Alert';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import tag_list from '../data/tag_full_list.json';
 import { Redirect } from "react-router-dom";
-import { fade, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 export default function SearchForm() {
 

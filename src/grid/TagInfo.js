@@ -5,13 +5,12 @@ import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import LabelRounded from '@material-ui/icons/LabelRounded';
 import * as he from 'he';
-import { Grow, Icon } from '@material-ui/core';
+import { Grow } from '@material-ui/core';
 
 function TagInfo({tagName}) {
   const [excerpt, setExcerpt] = useState([]);
   const [ready, setReady] = useState(false);
 
-  console.log("tag info: " + tagName);
   useEffect(() => {
     axios.get("https://api.stackexchange.com/2.2/tags/" + encodeURIComponent(tagName) + "/wikis?site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
       .then(res => res.data.items[0])

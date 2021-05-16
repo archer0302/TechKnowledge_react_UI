@@ -33,11 +33,14 @@ function App() {
       color: '#96958F',
       width: drawerWidth,
     },
-    content: {
+    main: {
       height: '100vh',
       flexGrow: 1,
       padding: theme.spacing(3),
       background: '#e7e7e7',
+      [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(2)
+      },
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
@@ -51,6 +54,9 @@ function App() {
       [theme.breakpoints.up('sm')]: {
         display: 'block',
       },
+    },
+    container: {
+      alignItems: 'center'
     }
   }));
 
@@ -72,8 +78,8 @@ function App() {
         
 
         {/* Main content */}
-        <main className={classes.content}>
-          <Container maxWidth='lg'>
+        <main className={classes.main}>
+          <Container maxWidth='lg' className={classes.container}>
             <Toolbar/>
             <Switch>
               <Route path='/TagCompare'>
