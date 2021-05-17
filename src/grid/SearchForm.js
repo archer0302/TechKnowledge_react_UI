@@ -23,7 +23,7 @@ export default function SearchForm() {
       width: '160px',
       [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(3),
-        width: '200px',
+        width: '400px',
       },
     },
     inputRoot: {
@@ -38,7 +38,7 @@ export default function SearchForm() {
       [theme.breakpoints.up('sm')]: {
         width: '20ch',
       },
-    },
+    }
   }));
 
   const classes = useStyles();
@@ -50,13 +50,25 @@ export default function SearchForm() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(value);
-    if (tag_list.includes(value)) {
-      setNotFound(false);
+    if (value) {
+      for (const tag of value) {
+        if (!tag_list.includes(tag)) {
+          setNotFound(true);
+          setAlert(tag);
+          return;
+        }
+      }
+
       setResult(value);
-    } else {
-      setNotFound(true);
-      setAlert(value);
+
+      // if (value.length === 1) {
+      //   if (tag_list.includes(value[0])) {
+      //     setNotFound(false);
+      //   } else {
+      //     setNotFound(true);
+      //     setAlert(value);
+      //   }
+      // }
     }
   }
 
@@ -65,21 +77,24 @@ export default function SearchForm() {
       <div style={{display:'flex', flexDirection: 'row', alignItems: 'center'}}>
         <div className={classes.search}>
           <Autocomplete
-            value={value}
+            multiple
+            id="tags-outlined"
             onChange={(event, newValue) => {
               setValue(newValue);
             }}
-            id="free-solo-demo"
-            filterOptions={filterOptions}
+            classes={{
+              inputRoot: classes.inputRoot
+            }}
             options={tag_list}
-            classes={classes}
+            getOptionLabel={(tag) => tag}
+            filterSelectedOptions
+            filterOptions={filterOptions}
             size="small"
-            freeSolo
             renderInput={(params) => (
-              <TextField {...params} 
-                placeholder="search..." 
-                variant="outlined" 
-                type='search'
+              <TextField
+                {...params}
+                variant="outlined"
+                label="select tags"
               />
             )}
           />
@@ -93,7 +108,10 @@ export default function SearchForm() {
       
       <div style={{marginLeft: '10px'}}>
         {(notFound && !!alert) ? <Alert severity="error">Tag {alert} not found.</Alert> : ''}
-        {result ? <Redirect to={"/TagWiki/" + encodeURI(result)} /> : ''}
+        {result ? result.length === 1 ? 
+          <Redirect to={"/TagWiki/" + encodeURI(result)} /> : 
+          <Redirect to={"/TagCompare/" + encodeURI(result)} /> : 
+        ''}
       </div>
     </form>
   )

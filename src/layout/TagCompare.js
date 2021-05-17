@@ -4,8 +4,9 @@ import TrendGraph from '../graph/TrendGraph';
 import TagInfo from '../grid/TagInfo';
 // import TopQuestions from '../grid/TopQuestions';
 import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { fetchRelation } from '../data/RelationJson';
 import * as d3 from 'd3';
 
@@ -22,16 +23,14 @@ export default function TagCompare() {
 
   const classes = useStyles();
 
-  const compare = [
-    'python',
-    'c#'
-  ];
+  let { tags } = useParams();
+  tags = tags.split(',');
 
   let nodesData = [];
   let linkData = [];
   const colors = d3.schemeCategory10;
 
-  compare.forEach((tag, i) => {
+  tags.forEach((tag, i) => {
     let relation = fetchRelation(tag, true);
     relation.nodes.forEach(n => n.color = colors[i]);
     relation.nodes.forEach(n => {
@@ -47,7 +46,7 @@ export default function TagCompare() {
     // nodesData = nodesData.concat(relation.nodes);
     relation.links.forEach(n => {
       n.color = colors[i];
-      if (compare.includes(n.source) && compare.includes(n.target)) {
+      if (tags.includes(n.source) && tags.includes(n.target)) {
         n.distance = 300;
       } else {
         n.distance = 100;
@@ -67,7 +66,7 @@ export default function TagCompare() {
       <Grid item xs={6}>
         <Grid container spacing={4} justify='left'>
           <Grid item>
-            <TagInfo tagName={"c#"}/>
+            <TagInfo tagName={tags[0]}/>
           </Grid>
         </Grid>
       </Grid>
@@ -75,23 +74,23 @@ export default function TagCompare() {
       <Grid item xs={6}>
         <Grid container spacing={4} justify='left'>
           <Grid item>
-            <TagInfo tagName={"python"}/>
+            <TagInfo tagName={tags[1]}/>
           </Grid>
         </Grid>
       </Grid>
       
-
-      <Grid item xs={5}>
-        <Grid item>
-            <TrendGraph width={500} height={400} tag={["c#", "python"]}/>
+      <Grid container xs={6}>
+        <Grid item xs={12}>
+          <TrendGraph height={350} tags={tags}/>
         </Grid>
       </Grid>
 
-      <Grid xs={1}/>
       <Grid item xs={6}>
         <Grid container spacing={1} alignItems='stretch' className={classes.knowledgeGraph}>
           <Grid item xs={12}>
-            <Network nodesData={nodesData} linkData={linkData} width={700} height={490}/>
+            <Card>
+              <Network nodesData={nodesData} linkData={linkData} width={700} height={490}/>
+            </Card>
           </Grid>
         </Grid>
       </Grid>

@@ -33,7 +33,6 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
   const d3Container = useRef(null);
 
   useEffect(() => {
-    console.log(nodesData);
     if (nodesData && d3Container.current) {
 
       const svg = d3.select(d3Container.current)

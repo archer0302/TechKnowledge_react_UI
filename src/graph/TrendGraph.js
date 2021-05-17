@@ -13,7 +13,6 @@ function TrendGraph({height, tags}) {
   useEffect(() => {
     async function fetchData(tags) {
       let trends = [];
-      console.log('fetching data');
       for (const tag of tags) {
         const trendData = await getTagTrend(tag);
         for (const [index, count] of trendData['trend'].entries()) {
@@ -44,7 +43,7 @@ function TrendGraph({height, tags}) {
   }, [tags]);
 
   return (
-    <Card style={{background: 'transparent'}}>
+    <Card style={{background: 'transparent'}} elevation={0}>
       {fetched ?
         <ResponsiveContainer width="100%" height={height}>
           <AreaChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>

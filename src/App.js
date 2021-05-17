@@ -82,7 +82,7 @@ function App() {
           <Container maxWidth='lg' className={classes.container}>
             <Toolbar/>
             <Switch>
-              <Route path='/TagCompare'>
+              <Route path='/TagCompare/:tags'>
                 <TagCompare />
               </Route>
               <Route path='/TagWiki/:tag'>
