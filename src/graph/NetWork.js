@@ -56,7 +56,7 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
         .selectAll("line")
         .data(linkData)
         .join("line")
-        .attr("stroke-width", 4)
+        .attr("stroke-width", 2.5)
         .attr("stroke", d => d.stroke ? d.stroke : 'black');
     
       const node = svg.append("g")

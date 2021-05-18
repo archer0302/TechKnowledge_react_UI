@@ -71,9 +71,11 @@ function App() {
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
-            <Typography variant='h6' noWrap className={classes.title}>
-              TechKnowledge
-            </Typography>
+            <a href='/'>
+              <Typography variant='h6' noWrap className={classes.title}>
+                <span>TechKnowledge</span>
+              </Typography>
+            </a>
             <SearchForm />
           </Toolbar>
         </AppBar>

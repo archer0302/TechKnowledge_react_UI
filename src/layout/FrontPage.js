@@ -64,7 +64,7 @@ export default function FrontPage() {
         <NetWork nodesData={nodesData} linkData={linkData} width={1200} height={800} forceXY={[0.005, 0.025]}/>
         Don't know where to start? Search in the searchbar on top or try 
         <Button color="primary" onClick={() => setRandom(top100Tag[Math.floor(Math.random() * top100Tag.length)])}>Random tag</Button>
-        {random ?
+        {random.length !== 0 ?
           <Redirect to={"/TagWiki/" + encodeURI(random)} /> : 
         ''}
       </div>
