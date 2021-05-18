@@ -9,7 +9,9 @@ import { Grow } from '@material-ui/core';
 
 function TagInfo({tagName}) {
   const [excerpt, setExcerpt] = useState([]);
-  const [ready, setReady] = useState(false);
+  const [synonyms, setSynonyms] = useState([]);
+  const [excerptReady, setExcerptReady] = useState(false);
+  const [synonymsReady, setSynonymsReady] = useState(false);
 
   useEffect(() => {
     axios.get("https://api.stackexchange.com/2.2/tags/" + encodeURIComponent(tagName) + "/wikis?site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
@@ -17,16 +19,26 @@ function TagInfo({tagName}) {
       .catch(error => console.log(error))
       .then(
         (result) => {
-          console.log(result);
           setExcerpt(result.excerpt);
-          setReady(true);
+          setExcerptReady(true);
         }
       )
+
+    axios.get("https://api.stackexchange.com/2.2/tags/" + encodeURIComponent(tagName) + "/synonyms?order=desc&sort=applied&site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
+    .then(res => res.data.items)
+    .catch(error => console.log(error))
+    .then(
+      (result) => {
+        const synonyms = result.map((element) => element.from_tag);
+        setSynonyms(synonyms);
+        setSynonymsReady(true);
+      }
+    )
   }, [tagName]);
 
   return (
-    <Grow in={ready}
-      {...(ready ? { timeout: 1000 } : {})}>
+    <Grow in={excerptReady && synonymsReady}
+      {...(excerptReady && synonymsReady ? { timeout: 1000 } : {})}>
       <Card>
         <CardContent style={{
             flexWrap: 'wrap',
@@ -40,6 +52,12 @@ function TagInfo({tagName}) {
           <Typography variant='body1'>
             {he.decode(String(excerpt))}
           </Typography>
+          {synonyms.length !== 0 ? (
+              <Typography variant='body1'>
+              <br/><b>Synonyms: </b>{synonyms.join(', ')}
+            </Typography>
+            ) : null
+          }
         </CardContent>
       </Card>
     </Grow>

@@ -10,6 +10,8 @@ import FrontPage from './layout/FrontPage';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from '@material-ui/core';
 import SearchForm from './grid/SearchForm';
+import SankeyGraph from './graph/SankeyGraph';
+import ChordTagWiki from './layout/ChordTagWiki';
 
 
 
@@ -34,7 +36,7 @@ function App() {
       width: drawerWidth,
     },
     main: {
-      height: '100vh',
+      height: '100%',
       flexGrow: 1,
       padding: theme.spacing(3),
       background: '#e7e7e7',
@@ -56,7 +58,7 @@ function App() {
       },
     },
     container: {
-      alignItems: 'center'
+      alignItems: 'center',
     }
   }));
 
@@ -87,6 +89,12 @@ function App() {
               </Route>
               <Route path='/TagWiki/:tag'>
                 <TagWiki />
+              </Route>
+              <Route path='/test/chord/:tag'>
+                <ChordTagWiki />
+              </Route>
+              <Route path='/test'>
+                <SankeyGraph tag='html' />
               </Route>
               <Route path='/'>
                 <FrontPage />

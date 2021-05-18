@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NetWork from '../graph/NetWork';
 import { fetchRelation } from '../data/RelationJson';
 import * as d3 from 'd3';
+import { Button, Typography } from '@material-ui/core';
+import top100Tag from '../data/top100_tag.json';
+import { Redirect } from "react-router-dom";
+
 
 export default function FrontPage() {
+  const [random, setRandom] = useState([]);
 
   const top10 = ['javascript',
     'java',
@@ -47,7 +52,21 @@ export default function FrontPage() {
   return (
     <div>
       <div style={{alignItems: 'center', display:'flex', flexDirection: 'column'}}>
-        <NetWork nodesData={nodesData} linkData={linkData} width={1500} height={900} forceXY={[0.005, 0.035]}/>
+        <div style={{width: '800px'}}>
+          <Typography variant="h2">Techknowledge</Typography>
+          <Typography variant="h6">The place to explore indepth knowledge of Technology.</Typography>
+          <Typography variant="body">
+            We applied several data mining methods to explore the trend and relationship between tags on StakOverflow.com 
+            and also process NLP to the corpus on StakOverflow.com to provide technology comparison (#TechCompare).
+            From this website, you can find the visualized result and the knowledge that we found.
+          </Typography>
+        </div>
+        <NetWork nodesData={nodesData} linkData={linkData} width={1200} height={800} forceXY={[0.005, 0.025]}/>
+        Don't know where to start? Search in the searchbar on top or try 
+        <Button color="primary" onClick={() => setRandom(top100Tag[Math.floor(Math.random() * top100Tag.length)])}>Random tag</Button>
+        {random ?
+          <Redirect to={"/TagWiki/" + encodeURI(random)} /> : 
+        ''}
       </div>
     </div>
   )

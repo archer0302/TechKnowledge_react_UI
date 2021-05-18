@@ -60,15 +60,6 @@ export default function SearchForm() {
       }
 
       setResult(value);
-
-      // if (value.length === 1) {
-      //   if (tag_list.includes(value[0])) {
-      //     setNotFound(false);
-      //   } else {
-      //     setNotFound(true);
-      //     setAlert(value);
-      //   }
-      // }
     }
   }
 

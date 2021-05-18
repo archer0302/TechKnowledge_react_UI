@@ -49,21 +49,21 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
                       .strength(forceXY ? forceXY[0] : 0.001))
         .force('y', d3.forceY(height/2)
                       .strength(forceXY ? forceXY[1] : 0.001))
-        .force("collide", d3.forceCollide().radius(13).iterations(iter ? iter : 1));
+        .force("collide", d3.forceCollide().radius(13).iterations(iter ? iter : 5));
 
       const link = svg.append("g")
-        .attr("stroke-opacity", 0.6)
+        .attr("stroke-opacity", 0.35)
         .selectAll("line")
         .data(linkData)
         .join("line")
-        .attr("stroke-width", 2)
+        .attr("stroke-width", 4)
         .attr("stroke", d => d.stroke ? d.stroke : 'black');
     
       const node = svg.append("g")
         .selectAll("circle")
         .data(nodesData)
         .join("circle")
-        .attr("r", 8)
+        .attr("r", d => d.size ? d.size : 8)
         .attr("fill", d => d.color)
         .attr('stroke', 'white')
         .attr("stroke-width", 2)
@@ -79,8 +79,10 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
         .append("text")
         .attr("dy", -7)
         .attr("fill","black")
+        .attr("stroke","white")
+        .attr("stroke-width",".1px")
         .attr("font-family","sans-serif")
-        .attr("font-size","14px")
+        .attr("font-size","10px")
         .text(d => d.name);
 
       simulation.on("tick", () => {

@@ -42,6 +42,7 @@ export default function TagWiki() {
       <Grid item xs={12} sm={6}>
         <Grid container direction='column' spacing={2}>
           <Grid item xs={12}>
+            <h4>Asking Trend on StackOverflow</h4>
             <TrendGraph height={350} tags={[tag]}/>
           </Grid>
           <Grid item xs={12}>
@@ -53,7 +54,7 @@ export default function TagWiki() {
         <Grid item xs={12}>
           <Card>
             <Network nodesData={relation.nodes} linkData={relation.links} 
-              width={500} height={500} nodeStrength={-32} iter={1}
+              width={500} height={400} nodeStrength={-30} iter={1}
               centerForce={0.05}
             />
           </Card>
