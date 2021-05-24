@@ -80,7 +80,7 @@ export default function TagCompare() {
 
       <Grid item xs={12}>
         <Grid container 
-          spacing={4} 
+          spacing={6} 
           justify='left'
           alignItems='stretch'
         >
@@ -90,7 +90,7 @@ export default function TagCompare() {
           </Grid>
           <Grid item xs={6}>
             <Card>
-              <Network nodesData={nodesData} linkData={linkData} width={700} height={490}/>
+              <Network nodesData={nodesData} linkData={linkData} width={600} height={420}/>
             </Card>
           </Grid>
         </Grid>

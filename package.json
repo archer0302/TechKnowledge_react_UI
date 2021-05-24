@@ -22,6 +22,7 @@
     "react-graph-network": "^1.0.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-tagcloud": "^2.1.1",
     "recharts": "^2.0.9",
     "web-vitals": "^1.1.0"
   },

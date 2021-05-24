@@ -104,6 +104,7 @@ function App() {
                 <FrontPage />
               </Route>
             </Switch>
+            <div style={{alignContent: 'center'}}>About us | Feedback</div>
           </Container>
         </main>
       </Router>
