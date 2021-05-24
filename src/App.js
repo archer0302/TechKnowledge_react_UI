@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import TagWiki from './layout/TagWiki';
 import TagCompare from './layout/TagCompare';
 import FrontPage from './layout/FrontPage';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Container } from '@material-ui/core';
 import SearchForm from './grid/SearchForm';
 import SankeyGraph from './graph/SankeyGraph';
@@ -71,11 +71,13 @@ function App() {
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
-            <a href='/'>
-              <Typography variant='h6' noWrap className={classes.title}>
-                <span>TechKnowledge</span>
-              </Typography>
-            </a>
+            <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+              <div>
+                <Typography variant='h6' noWrap className={classes.title}>
+                  <span>TechKnowledge</span>
+                </Typography>              
+              </div>
+            </Link>
             <SearchForm />
           </Toolbar>
         </AppBar>

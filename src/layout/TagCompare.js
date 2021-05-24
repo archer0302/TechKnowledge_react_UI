@@ -63,37 +63,45 @@ export default function TagCompare() {
       spacing={2}
       xs={12}
     >
-      <Grid item xs={6}>
-        <Grid container spacing={4} justify='left'>
-          <Grid item>
+      <Grid item xs={12}>
+        <Grid container 
+          spacing={4} 
+          justify='left'
+          alignItems='stretch'
+        >
+          <Grid xs={6} item>
             <TagInfo tagName={tags[0]}/>
           </Grid>
-        </Grid>
-      </Grid>
-
-      <Grid item xs={6}>
-        <Grid container spacing={4} justify='left'>
-          <Grid item>
+          <Grid xs={6} item>
             <TagInfo tagName={tags[1]}/>
           </Grid>
         </Grid>
       </Grid>
-      
-      <Grid container xs={6}>
-        <Grid item xs={12}>
-          <TrendGraph height={350} tags={tags}/>
-        </Grid>
-      </Grid>
 
-      <Grid item xs={6}>
-        <Grid container spacing={1} alignItems='stretch' className={classes.knowledgeGraph}>
-          <Grid item xs={12}>
+      {/* <Grid item xs={6}>
+        <Grid container spacing={4} justify='left'>
+          
+        </Grid>
+      </Grid> */}
+
+      <Grid item xs={12}>
+        <Grid container 
+          spacing={4} 
+          justify='left'
+          alignItems='stretch'
+        >
+          <Grid item xs={6}>
+            <h4>Asking Trend on StackOverflow</h4>
+            <TrendGraph height={350} tags={tags}/>
+          </Grid>
+          <Grid item xs={6}>
             <Card>
               <Network nodesData={nodesData} linkData={linkData} width={700} height={490}/>
             </Card>
           </Grid>
         </Grid>
       </Grid>
+
       <Grid item xs={12}>
         Comparison
       </Grid>

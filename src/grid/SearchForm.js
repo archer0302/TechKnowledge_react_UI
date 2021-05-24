@@ -99,10 +99,8 @@ export default function SearchForm() {
       
       <div style={{marginLeft: '10px'}}>
         {(notFound && !!alert) ? <Alert severity="error">Tag {alert} not found.</Alert> : ''}
-        {result ? result.length === 1 ? 
-          <Redirect to={"/TagWiki/" + encodeURI(result)} /> : 
-          <Redirect to={"/TagCompare/" + encodeURI(result)} /> : 
-        ''}
+        {result ? result.length === 1 ? <Redirect to={"/TagWiki/" + encodeURI(result)} /> : 
+          <Redirect to={"/TagCompare/" + encodeURI(result)} /> : ''}
       </div>
     </form>
   )
