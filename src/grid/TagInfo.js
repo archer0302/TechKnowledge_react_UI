@@ -39,7 +39,7 @@ function TagInfo({tagName}) {
   return (
     <Grow in={excerptReady && synonymsReady}
       {...(excerptReady && synonymsReady ? { timeout: 1000 } : {})}>
-      <Card>
+      <Card style={{ height: '100%' }}>
         <CardContent style={{
             flexWrap: 'wrap',
         }}>

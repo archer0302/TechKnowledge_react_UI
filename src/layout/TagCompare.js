@@ -31,7 +31,7 @@ export default function TagCompare() {
   const colors = d3.schemeCategory10;
 
   tags.forEach((tag, i) => {
-    let relation = fetchRelation(tag, true);
+    let relation = fetchRelation(tag, true, i);
     relation.nodes.forEach(n => n.color = colors[i]);
     relation.nodes.forEach(n => {
       // prevent duplicated nodes
@@ -77,12 +77,6 @@ export default function TagCompare() {
           </Grid>
         </Grid>
       </Grid>
-
-      {/* <Grid item xs={6}>
-        <Grid container spacing={4} justify='left'>
-          
-        </Grid>
-      </Grid> */}
 
       <Grid item xs={12}>
         <Grid container 

@@ -11,7 +11,7 @@ export default function SearchForm() {
 
   const [value, setValue] = useState('');
   const [result, setResult] = useState('');
-  const [notFound, setNotFound] = useState(false);
+  const [error, setError] = useState(false);
   const [alert, setAlert] = useState('');
 
   const useStyles = makeStyles((theme) => ({
@@ -51,15 +51,21 @@ export default function SearchForm() {
   const handleSubmit = e => {
     e.preventDefault();
     if (value) {
-      for (const tag of value) {
-        if (!tag_list.includes(tag)) {
-          setNotFound(true);
-          setAlert(tag);
-          return;
+      if (value.length > 2) {
+        setError(true);
+        setAlert('Maximum 2 tags.');
+      } else {
+        for (const tag of value) {
+          if (!tag_list.includes(tag)) {
+            setError(true);
+            setAlert('Tag ' + tag + ' not found.');
+            return;
+          }
         }
+  
+        setError(false);
+        setResult(value);
       }
-
-      setResult(value);
     }
   }
 
@@ -98,9 +104,9 @@ export default function SearchForm() {
       </div>
       
       <div style={{marginLeft: '10px'}}>
-        {(notFound && !!alert) ? <Alert severity="error">Tag {alert} not found.</Alert> : ''}
+        {(error && !!alert) ? <Alert severity="error">{alert}</Alert> : ''}
         {result ? result.length === 1 ? <Redirect to={"/TagWiki/" + encodeURI(result)} /> : 
-          <Redirect to={"/TagCompare/" + encodeURI(result)} /> : ''}
+         result.length === 2 ? <Redirect to={"/TagCompare/" + encodeURI(result)} /> : '' : ''}
       </div>
     </form>
   )
