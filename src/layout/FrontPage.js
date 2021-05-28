@@ -6,11 +6,27 @@ import { Button, Typography } from '@material-ui/core';
 import top100Tag from '../data/top100_tag.json';
 import { Redirect } from "react-router-dom";
 import { TagCloud } from 'react-tagcloud';
-
+import { makeStyles } from '@material-ui/core/styles';
 
 
 export default function FrontPage() {
   const [random, setRandom] = useState([]);
+
+  const useStyles = makeStyles((theme) => ({
+    frontPageTitle: {
+      alignItems: 'center', 
+      display:'flex', 
+      flexDirection: 'column'
+    },
+    frontPageText: {
+      width: '1000px', 
+      textAlign: 'center', 
+      lineHeight: '1.8', 
+      fontSize: '16px'
+    }
+  }));
+
+  const classes = useStyles();
 
   const top10 = ['javascript',
     'java',
@@ -23,17 +39,15 @@ export default function FrontPage() {
   ];
 
   const cloud_data = [
-    { value: 'jQuery', count: 25 },
-    { value: 'MongoDB', count: 18 },
-    { value: 'JavaScript', count: 38 },
-    { value: 'React', count: 30 },
-    { value: 'Nodejs', count: 28 },
-    { value: 'Express.js', count: 25 },
-    { value: 'HTML5', count: 33 },
-    { value: 'CSS3', count: 20 },
-    { value: 'Webpack', count: 22 },
+    { value: 'jQuery vs Reactjs', count: 25, props: { style: { paddingLeft: '30px'} } },
+    { value: 'MongoDB vs sql', count: 18 },
+    { value: 'JavaScript vs Python', count: 38 },
+    { value: 'npm vs yarn', count: 28 },
+    { value: 'Express.js vs nodejs', count: 25 },
+    { value: 'HTML5 vs HTML', count: 33 },
+    { value: 'CSS3 vs SCSS', count: 20 },
     { value: 'Babel.js', count: 7 },
-    { value: 'ECMAScript', count: 25 },
+    { value: 'ECMAScript vs Typescript', count: 25 },
     { value: 'Jest', count: 15 },
     { value: 'Mocha', count: 17 },
     { value: 'React Native', count: 27 },
@@ -57,7 +71,7 @@ export default function FrontPage() {
     relation.nodes.forEach(n => {
       // prevent duplicated nodes
       if (!nodesData.some(d => d.name === n.name)) {
-        nodesData.push(n);
+        nodesData.push({...n, size: 6});
       // If this is the main node, use the color of the cluster
       } else if (n.name === tag) {
         const index = nodesData.findIndex(e => e.name === tag);
@@ -68,18 +82,23 @@ export default function FrontPage() {
     relation.links.forEach(n => {
       n.color = colors[i];
       if (top10.includes(n.source) && top10.includes(n.target)) {
-        n.distance = 300;
+        n.distance = 500;
       } else {
         n.distance = 100;
       }
     });
     linkData = linkData.concat(relation.links);
   });
+  
+  top10.forEach((tag) => {
+    const index = nodesData.findIndex(e => e.name === tag);
+    nodesData[index] = {...nodesData[index], center: true, size: 10};  
+  });
 
   return (
     <div>
-      <div style={{alignItems: 'center', display:'flex', flexDirection: 'column'}}>
-        <div style={{width: '1000px', textAlign: 'center', lineHeight: '1.8', fontSize: '16px'}}>
+      <div className={classes.frontPageTitle}>
+        <div className={classes.frontPageText}>
           <Typography variant="h2">Techknowledge</Typography><br/>
           <Typography variant="h6">The place to explore indepth knowledge of Technology.</Typography><br/>
           <Typography variant="body">
@@ -93,10 +112,11 @@ export default function FrontPage() {
             {random.length !== 0 ? <Redirect to={"/TagWiki/" + encodeURI(random)} /> : ''}
           </div>
         </div>
-        <NetWork nodesData={nodesData} linkData={linkData} width={1200} height={800} forceXY={[0.005, 0.025]}/>
+        <NetWork nodesData={nodesData} linkData={linkData} width={1200} height={800} forceXY={[0.01, 0.03]} iter={5}/>
         
-        <div style={{width: '800px', textAlign: 'center'}}>
-          <Typography variant="h3" id='TechCompare'>TechCompare</Typography>
+        <div className={classes.frontPageText}>
+          <Typography variant="h3" id='TechCompare'>TechCompare</Typography><br/>
+          <Typography variant="h6">Comparison between technologies.</Typography><br/>
           <Typography variant="body">
             We applied several data mining methods to explore the trend and relationship between tags on StakOverflow.com 
             and also process NLP to the corpus on StakOverflow.com to provide technology comparison (#TechCompare).
@@ -104,7 +124,7 @@ export default function FrontPage() {
           </Typography>
         </div>
         <TagCloud
-          minSize={20}
+          minSize={15}
           maxSize={60}
           tags={cloud_data}
           className="simple-cloud"

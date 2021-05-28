@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import { CloseOutlined } from '@material-ui/icons';
 
 const drag = simulation => {
   
   function dragstarted(event) {
-    if (!event.active) simulation.alphaTarget(0.07).restart();
+    if (!event.active) simulation.alphaTarget(0.3).restart();
     event.subject.fx = event.subject.x;
     event.subject.fy = event.subject.y;
   }
@@ -26,6 +27,10 @@ const drag = simulation => {
       .on("end", dragended);
 }
 
+function collideForce(d) {
+  return d.size + d.center ? 50 : 8;
+}
+
 
 /* Component */
 export default function NetWork({ nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce }) {
@@ -42,14 +47,15 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
       const simulation = d3.forceSimulation(nodesData)
         .force("link", d3.forceLink(linkData).id(d => d.id)
                                              .distance(link => link.distance ? link.distance : 100)
-                                             .strength(0.3))
+                                             .strength(0.7))
         .force("charge", d3.forceManyBody().strength(nodeStrength ? nodeStrength : -40))
         .force("center", d3.forceCenter(width / 2, height / 2).strength(centerForce ? centerForce : 0.05))
         .force('x', d3.forceX(height/2)
                       .strength(forceXY ? forceXY[0] : 0.001))
         .force('y', d3.forceY(height/2)
                       .strength(forceXY ? forceXY[1] : 0.001))
-        .force("collide", d3.forceCollide().radius(13).iterations(iter ? iter : 5));
+        .force("collide", d3.forceCollide().radius(collideForce).iterations(iter ? iter : 5))
+        // .force('cluster', cluster().strength(0.2));
 
       const link = svg.append("g")
         .attr("stroke-opacity", 0.35)
@@ -65,6 +71,7 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
         .join("circle")
         .attr("r", d => d.size ? d.size : 8)
         .attr("fill", d => d.color)
+        .attr("opacity", 0.7)
         .attr('stroke', 'white')
         .attr("stroke-width", 2)
         .call(drag(simulation));
@@ -77,12 +84,12 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
         .data(nodesData)
         .enter()
         .append("text")
-        .attr("dy", -7)
         .attr("fill","black")
         .attr("stroke","white")
-        .attr("stroke-width",".1px")
+        .attr("stroke-width","0.2px")
         .attr("font-family","sans-serif")
-        .attr("font-size","10px")
+        .attr("font-size","15px")
+        .attr("font-weight", "bold")
         .text(d => d.name);
 
       simulation.on("tick", () => {
