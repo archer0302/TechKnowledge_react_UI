@@ -7,7 +7,7 @@ import TopQuestions from '../grid/TopQuestions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from "react-router-dom";
-import { newFormatTest, newNodeLinks } from '../data/RelationJson';
+import { newNodeLinks } from '../data/RelationJson';
 import { Card } from '@material-ui/core';
 
 export default function TagWiki() {
@@ -25,7 +25,6 @@ export default function TagWiki() {
 
   const { tag } = useParams();
 
-  // const relation = newFormatTest(tag, false);
   const relation = newNodeLinks(tag, false);
   
   return (
@@ -56,7 +55,7 @@ export default function TagWiki() {
         <Grid item xs={12}>
           <Card>
             <Network nodesData={relation.nodes} linkData={relation.links} 
-              width={350} height={350} nodeStrength={-10} iter={5}
+              width={350} height={350} nodeStrength={-20} iter={5}
               centerForce={0.45} fontSize={6}
             />
           </Card>

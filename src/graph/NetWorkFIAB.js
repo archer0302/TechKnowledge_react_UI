@@ -124,7 +124,7 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
         // circle.filter(function(n){ return neighbors[n.index] })
         //     .style("stroke-width", 2);
         text.filter(function(n){ return neighbors[n.index] })
-            .style("font-size", fontSize * 1.5)
+            .style("font-size", fontSize ? fontSize * 1.5 : 13)
             .style("stroke-width", 0.23);
       };
 

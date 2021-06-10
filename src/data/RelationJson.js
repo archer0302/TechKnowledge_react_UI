@@ -2,13 +2,10 @@ import * as d3 from 'd3';
 
 const relation = require('./relation.json');
 const nodesFile = require('./nodes.json');
-const linksFile = require('./links_strict.json');
-const relation_new = require('./relation_8_new.json');
+const linksFile = require('./links.json');
 const louvain = require('louvain');
 
 const colors = d3.schemeCategory10;
-
-const sort_by_count = (a, b) => b.count - a.count;
 
 export const newNodeLinks = (center) => {
   const nodesData = nodesFile[center];
@@ -22,8 +19,6 @@ export const newNodeLinks = (center) => {
     nodeCounts[node] = count;
     nodes.push(node);
   });
-
-  // nodes = Array.from(new Set(nodes));
 
   linksData.forEach((data) => {
     const [rule, , oeRatio] = data;
@@ -77,88 +72,6 @@ export const newNodeLinks = (center) => {
   return {"nodes": nodes, "links": links};
 }
 
-
-export const newFormatTest = (center) => {
-  const {rules} = relation_new[center];
-  let nodes = [center];
-  const nodeCounts = {};
-  const links = [];
-  const init_groups = {};
-  rules.sort(sort_by_count);
-
-  let fi = 0
-  while (fi < 8 && rules.length > fi) {
-    const {target, count} = rules[fi++];
-    nodes.push(target);
-    init_groups[target] = fi;
-    nodeCounts[target] = count;
-  }
-
-  nodes.forEach((name, g) => {
-    if (name !== center && !!relation_new[name]) {
-      let {rules: subRules} = relation_new[name];
-      console.log(Object.entries(subRules[0]));
-      subRules.sort(sort_by_count);
-
-      let i = 0;
-      while (i < 4 && subRules.length > i) {
-        const {target, count} = subRules[i++];
-
-        if (target === center) continue;
-
-        nodes.push(target);
-
-        if (!(target in nodeCounts)) {
-          nodeCounts[target] = count;
-          init_groups[target] = g;
-        }
-
-        links.push({
-          "source": name, 
-          "target": target, 
-          "weight": count
-        });
-      }
-    }
-  });
-
-  nodes = Array.from(new Set(nodes));
-  var community = louvain.jLouvain()
-    .nodes(nodes).edges(links)
-    .partition_init(init_groups);
-  var result  = community();
-  nodes = nodes.filter(node => node !== center);
-
-  var count_scale = d3.scaleLinear()
-    .domain([0, d3.max(Object.values(nodeCounts))])
-    .range([16, 100]);
-
-  links.forEach((n, i) => {
-    const sourceIndex = nodes.findIndex(d => d === n.source);
-    n.source = sourceIndex;
-    n.target = nodes.findIndex(d => d === n.target);
-    // n.stroke = colors[result[nodes[sourceIndex]]];
-  });
-
-  nodes = nodes.map(node => {
-    return {
-      id: node,
-      name: node,
-      group: result[node],
-      color: colors[result[node]],
-      size: Math.sqrt(count_scale(nodeCounts[node]))
-    }
-  });
-
-  return {"nodes": nodes, "links": links};
-}
-
-// export const multipleCenterRelation = (centers) => {
-//   const {count: centerCount, rules} = relation_new[center];
-
-// }
-
-// TODO: seperate into one center and multiple centers
 export const fetchRelation = (center, includeCenter, i) => {
   includeCenter = includeCenter ? includeCenter : false;
   const firstLayerRelations = relation[center];
