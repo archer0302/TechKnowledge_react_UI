@@ -1,13 +1,104 @@
 import * as d3 from 'd3';
 
-const relation = require('./relation.json');
+// const relation = require('./relation.json');
+// const relation_new = require('./relation_8_new.json');
+const relation_5 = require('./relation_least_8.json');
+const louvain = require('louvain');
 
 const colors = d3.schemeCategory10;
+
+export const louTest = (center) => {
+  // const firstLayerRelations = relation[center].length >= 5 ? relation[center] : relation_5[center];
+  const firstLayerRelations = relation_5[center];
+  let nodes = [center];
+  const nodeSize = {};
+  const links = [];
+  firstLayerRelations.sort((a, b) => b[1][0] - a[1][0]);
+
+  let max = 0;
+  let min = 1;
+
+  let fi = 0
+  while (fi < 8 && firstLayerRelations.length > fi) {
+    const element = firstLayerRelations[fi++];
+    const relationArray = element[0].flat();
+    const node = relationArray[0] === center ? relationArray[1] : relationArray[0];
+    const value = relationArray[0] === center ? element[1][1] : element[1][2];
+
+    nodes.push(node);
+    nodeSize[node] = value;
+
+    max = value > max ? value : max;
+    min = value < min ? value : min;
+  }
+
+  nodes.forEach((name, g) => {
+    nodeSize[name] = Math.max(Math.sqrt(nodeSize[name]) * 10, 8);
+    // nodeSize[name] = 10 - (2 * (max - nodeSize[name])) / (max - min);
+
+    if (!!relation_5[name]) {
+      let secondLayerRelation = relation_5[name];
+      secondLayerRelation = secondLayerRelation.filter(r => r[0].every(n => n !== center));
+      secondLayerRelation.sort((a, b) => b[1][0] - a[1][0]);
+
+      let i = 0;
+      while (i < 4 && secondLayerRelation.length > i) {
+        const element = secondLayerRelation[i++];
+        const relationArray = element[0].flat();
+        const source = relationArray[0] === name ? relationArray[0] : relationArray[1];
+        const target = relationArray[0] === name ? relationArray[1] : relationArray[0];
+        const conf = relationArray[0] === name ? element[1][1] : element[1][2];
+        const size = Math.max(Math.sqrt(conf) * 8, 4);
+
+        nodes.push(target);
+        if (!(target in nodeSize)) {
+          nodeSize[target] = size;
+        }
+
+        links.push({
+          "source": source, 
+          "target": target, 
+          "weight": conf
+        });
+      }
+    }
+  });
+
+  nodes = Array.from(new Set(nodes));
+  console.log(nodes, links);
+  var community = louvain.jLouvain().nodes(nodes).edges(links);
+  var result  = community();
+  nodes = nodes.filter(node => node !== center);
+  console.log(result);
+
+  nodes = nodes.map(node => {
+    console.log(nodeSize[node]);
+    return {
+      id: node,
+      name: node,
+      group: result[node],
+      color: colors[result[node]],
+      size: nodeSize[node]
+    }
+  });
+
+
+  links.forEach((n, i) => {
+    const sourceIndex = nodes.findIndex(d => d.name == n.source);
+    n.source = sourceIndex;
+    n.target = nodes.findIndex(d => d.name == n.target);
+    n.stroke = colors[result[nodes[sourceIndex].name]];
+  });
+
+  console.log(links);
+
+  return {"nodes": nodes, "links": links};
+}
 
 export const fetchChordRelation = (center) => {
   const includeAllChecker = (arr, target) => target.every(v => arr.includes(v));
   
-  const firstLayerRelations = relation[center];
+  const firstLayerRelations = relation[center].length >= 5 ? relation[center] : relation_5[center];
   const keys = [];
   const keyIndex = {};
 
@@ -144,7 +235,8 @@ export const fetchSankeyRelation = (center) => {
 }
 
 export const fetchSingleRelation = (center) => {
-  const firstLayerRelations = relation[center];
+  // const firstLayerRelations = relation[center].length >= 5 ? relation[center] : relation_5[center];
+  const firstLayerRelations = relation_5[center];
   let nodes = [];
   const links = [];
   firstLayerRelations.sort((a, b) => b[1][0] - a[1][0]);
@@ -152,8 +244,9 @@ export const fetchSingleRelation = (center) => {
   let max = 0;
   let min = 1;
 
-  // add all directed related nodes
-  firstLayerRelations.forEach((element, i) => {
+  let fi = 0
+  while (fi < 8 && firstLayerRelations.length > fi) {
+    const element = firstLayerRelations[fi++];
     const relationArray = element[0].flat();
     const node = relationArray[0] === center ? relationArray[1] : relationArray[0];
     const value = relationArray[0] === center ? element[1][1] : element[1][2];
@@ -165,9 +258,112 @@ export const fetchSingleRelation = (center) => {
 
     max = value > max ? value : max;
     min = value < min ? value : min;
+  }
+
+  // // add all directed related nodes
+  // firstLayerRelations.forEach((element, i) => {
+  //   const relationArray = element[0].flat();
+  //   const node = relationArray[0] === center ? relationArray[1] : relationArray[0];
+  //   const value = relationArray[0] === center ? element[1][1] : element[1][2];
+
+  //   nodes.push({
+  //     name: node,
+  //     value: value
+  //   });
+
+  //   max = value > max ? value : max;
+  //   min = value < min ? value : min;
+  // });
+  console.log(min, max)
+  const node_elements = [];
+
+  nodes.forEach((firstNode, i) => {
+    const {name, value} = firstNode;
+    const color = colors[i%colors.length];
+
+    node_elements.push({
+      "id": name,
+      "name": name,
+      "color": color,
+      "group": i,
+      "size": 10 - (2 * (max - value)) / (max - min)
+    });
+
+    // still have missing links
+    // if (name !== center && !!relation[name]) {
+    //   const secondLayerRelations = relation[name];
+
+    //   secondLayerRelations.forEach(element => {
+    //     const relationArray = element[0].flat();
+        
+    //     let newNode = false;
+    //     if (!relationArray.some(r => r === center)) {
+    //       relationArray.forEach(e => {
+    //         if (!node_elements.some(n => n.name === e) && e !== center) {
+    //           node_elements.push({
+    //             "id": e,
+    //             "name": e,
+    //             "color": color,
+    //             "size": e === name ? 10 - (2 * (max - value)) / (max - min) : 6
+    //           });
+    //           newNode = true;
+    //         }
+    //       });
+    //     }
+
+    //     if (newNode) {
+    //       links.push({
+    //         "source": relationArray[0], 
+    //         "target": relationArray[1], 
+    //         "stroke": color,
+    //       });
+    //     }
+
+    //   });
+    // }
   });
 
-  const node_elements = [];
+  nodes.forEach((firstNode, g) => {
+    const {name, value} = firstNode;
+    const color = colors[g%colors.length];
+
+    if (!!relation_5[name]) {
+      let secondLayerRelation = relation_5[name];
+      secondLayerRelation = secondLayerRelation.filter(r => r[0].every(n => n !== center));
+      secondLayerRelation.sort((a, b) => b[1][0] - a[1][0]);
+
+      let i = 0;
+      while (i < 4 && secondLayerRelation.length > i) {
+        const element = secondLayerRelation[i++];
+        const relationArray = element[0].flat();
+        const source = relationArray[0] === name ? relationArray[0] : relationArray[1];
+        const target = relationArray[0] === name ? relationArray[1] : relationArray[0];
+        const conf = relationArray[0] === name ? element[1][0] : element[1][1];
+        // const size = 8 - (2 * (max - conf)) / (max - min);
+        const size = Math.max(Math.sqrt(conf) * 8, 4);
+
+        if (!node_elements.some(n => n.name === target)) {
+          node_elements.push({
+            "id": target,
+            "name": target,
+            "color": color,
+            "group": g,
+            "size": size
+          });
+        }
+
+        links.push({
+          "source": source, 
+          "target": target, 
+          "stroke": color,
+          "distance": 100,
+          "weight": conf
+        });
+      }
+    }
+
+
+  });
 
   // let remainingNodes = nodes.map(e => e.name);
   // let nodeList = nodes.map(e => e.name);
@@ -225,47 +421,46 @@ export const fetchSingleRelation = (center) => {
   //   });
   // });
 
-
-
-  nodes.forEach((e, i) => {
-    const {name, value} = e;
-    // still have missing links
-    if (name !== center && !!relation[name]) {
-      const secondLayerRelations = relation[name];
-      const color = colors[i%colors.length];
-      
-      secondLayerRelations.forEach(element => {
-        const relationArray = element[0].flat();
-        
-        let newNode = false;
-        if (!relationArray.some(r => r === center)) {
-          relationArray.forEach(e => {
-            if (!node_elements.some(n => n.name === e) && e !== center) {
-              node_elements.push({
-                "id": e,
-                "name": e,
-                "color": color,
-                "size": e === name ? 10 - (2 * (max - value)) / (max - min) : 6
-              });
-              newNode = true;
-            }
-          });
-        }
-
-        if (newNode) {
-          links.push({
-            "source": relationArray[0], 
-            "target": relationArray[1], 
-            "stroke": color,
-          });
-        }
-
-      });
-    }
+  links.forEach((n, i) => {
+    n.source = node_elements.findIndex(d => d.name == n.source);
+    n.target = node_elements.findIndex(d => d.name == n.target);
   });
 
 
   return {"nodes": node_elements, "links": links};
+}
+
+export const mainPage = (center, i) => {
+  const firstLayerRelations = relation[center];
+  let nodes = [];
+  const lines = [];
+  firstLayerRelations.sort((a, b) => b[1][0] - a[1][0]);
+  const color = colors[i%colors.length];
+
+  // add all directed related nodes
+  firstLayerRelations.forEach((element, i) => {
+    const relationArray = element[0].flat();
+    nodes.push.apply(nodes, relationArray);
+    const node = relationArray[0] === center ? relationArray[1] : relationArray[0];
+
+    lines.push({
+      "source": relationArray[0], 
+      "target": relationArray[1], 
+      "stroke": color,
+    });
+  });
+
+  nodes = Array.from(new Set(nodes));
+
+  const node_elements = nodes.map(node => {
+    return {
+      "id": node,
+      "name": node,
+    }
+  });
+
+  return {"nodes": node_elements, "links": [...lines]};
+
 }
 
 // TODO: seperate into one center and multiple centers
@@ -307,6 +502,7 @@ export const fetchRelation = (center, includeCenter, i) => {
           const color = colors[i%colors.length];
   
           if (includeCenter || !relationArray.includes(center)) {
+            let support = element[1][0]
             nodes.push.apply(nodes, relationArray);
             lines.push({
               "source": relationArray[0], 

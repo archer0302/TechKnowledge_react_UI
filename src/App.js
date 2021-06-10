@@ -12,7 +12,20 @@ import { Container } from '@material-ui/core';
 import SearchForm from './grid/SearchForm';
 import SankeyGraph from './graph/SankeyGraph';
 import ChordTagWiki from './layout/ChordTagWiki';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
+// Create a theme instance.
+const theme = createMuiTheme({
+    overrides: {
+        MuiCssBaseline: {
+            "@global": {
+                body: {
+                    backgroundColor: "#e7e7e7",
+                }
+            }
+        }
+    }
+});
 
 
 function App() {
@@ -66,48 +79,50 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <Router>
-        {/* Header */}
-        <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
-              <div>
-                <Typography variant='h6' noWrap className={classes.title}>
-                  <span>TechKnowledge</span>
-                </Typography>              
-              </div>
-            </Link>
-            <SearchForm />
-          </Toolbar>
-        </AppBar>
-        
+      <ThemeProvider theme={theme}>
+        <Router>
+          {/* Header */}
+          <CssBaseline />
+          <AppBar position="fixed" className={classes.appBar}>
+            <Toolbar>
+              <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+                <div>
+                  <Typography variant='h6' noWrap className={classes.title}>
+                    <span>TechKnowledge</span>
+                  </Typography>              
+                </div>
+              </Link>
+              <SearchForm />
+            </Toolbar>
+          </AppBar>
+          
 
-        {/* Main content */}
-        <main className={classes.main}>
-          <Container maxWidth='lg' className={classes.container}>
-            <Toolbar/>
-            <Switch>
-              <Route path='/TagCompare/:tags'>
-                <TagCompare />
-              </Route>
-              <Route path='/TagWiki/:tag'>
-                <TagWiki />
-              </Route>
-              <Route path='/test/chord/:tag'>
-                <ChordTagWiki />
-              </Route>
-              <Route path='/test'>
-                <SankeyGraph tag='html' />
-              </Route>
-              <Route path='/'>
-                <FrontPage />
-              </Route>
-            </Switch>
-            <div style={{alignContent: 'center'}}>About us | Feedback</div>
-          </Container>
-        </main>
-      </Router>
+          {/* Main content */}
+          <main className={classes.main}>
+            <Container maxWidth='lg' className={classes.container}>
+              <Toolbar/>
+              <Switch>
+                <Route path='/TagCompare/:tags'>
+                  <TagCompare />
+                </Route>
+                <Route path='/TagWiki/:tag'>
+                  <TagWiki />
+                </Route>
+                <Route path='/test/chord/:tag'>
+                  <ChordTagWiki />
+                </Route>
+                <Route path='/test'>
+                  <SankeyGraph tag='html' />
+                </Route>
+                <Route path='/'>
+                  <FrontPage />
+                </Route>
+              </Switch>
+              <div style={{alignContent: 'center'}}>About us | Feedback</div>
+            </Container>
+          </main>
+        </Router>
+      </ThemeProvider>
     </div>
   );
 }

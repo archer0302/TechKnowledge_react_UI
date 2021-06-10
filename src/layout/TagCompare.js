@@ -1,5 +1,5 @@
 import React from 'react';
-import Network from '../graph/NetWork';
+import Network from '../graph/NetWorkFIAB';
 import TrendGraph from '../graph/TrendGraph';
 import TagInfo from '../grid/TagInfo';
 // import TopQuestions from '../grid/TopQuestions';
@@ -36,13 +36,13 @@ export default function TagCompare() {
     relation.nodes.forEach(n => {
       // prevent duplicated nodes
       if (!nodesData.some(d => d.name === n.name)) {
-        nodesData.push(n);
+        nodesData.push({...n, group: i});
       // If this is the main node, use the color of the cluster
       } else if (n.name === tag) {
         const index = nodesData.findIndex(e => e.name === tag);
         nodesData[index] = n;
       }
-    })
+    });
     // nodesData = nodesData.concat(relation.nodes);
     relation.links.forEach(n => {
       n.color = colors[i];
@@ -51,8 +51,15 @@ export default function TagCompare() {
       } else {
         n.distance = 100;
       }
+      n.source = nodesData.findIndex(d => d.name == n.source);
+      n.target = nodesData.findIndex(d => d.name == n.target);
     });
     linkData = linkData.concat(relation.links);
+  });
+
+  tags.forEach((tag) => {
+    const index = nodesData.findIndex(e => e.name === tag);
+    nodesData[index] = {...nodesData[index], center: true, size: 10};  
   });
 
   return (
@@ -90,7 +97,7 @@ export default function TagCompare() {
           </Grid>
           <Grid item xs={6}>
             <Card>
-              <Network nodesData={nodesData} linkData={linkData} width={600} height={420}/>
+              <Network nodesData={nodesData} linkData={linkData} width={400} height={400}/>
             </Card>
           </Grid>
         </Grid>

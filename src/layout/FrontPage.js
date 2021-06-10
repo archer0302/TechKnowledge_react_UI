@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NetWork from '../graph/NetWork';
+import NetWork from '../graph/NetWorkFIAB';
 import { fetchRelation } from '../data/RelationJson';
 import * as d3 from 'd3';
 import { Button, Typography } from '@material-ui/core';
@@ -71,7 +71,7 @@ export default function FrontPage() {
     relation.nodes.forEach(n => {
       // prevent duplicated nodes
       if (!nodesData.some(d => d.name === n.name)) {
-        nodesData.push({...n, size: 6});
+        nodesData.push({...n, size: 6, group: i});
       // If this is the main node, use the color of the cluster
       } else if (n.name === tag) {
         const index = nodesData.findIndex(e => e.name === tag);
@@ -86,9 +86,13 @@ export default function FrontPage() {
       } else {
         n.distance = 100;
       }
+      n.source = nodesData.findIndex(d => d.name == n.source);
+      n.target = nodesData.findIndex(d => d.name == n.target);
     });
     linkData = linkData.concat(relation.links);
   });
+
+  console.log(linkData);
   
   top10.forEach((tag) => {
     const index = nodesData.findIndex(e => e.name === tag);
@@ -112,7 +116,8 @@ export default function FrontPage() {
             {random.length !== 0 ? <Redirect to={"/TagWiki/" + encodeURI(random)} /> : ''}
           </div>
         </div>
-        <NetWork nodesData={nodesData} linkData={linkData} width={1200} height={800} forceXY={[0.01, 0.03]} iter={5}/>
+        <NetWork nodesData={nodesData} linkData={linkData} width={1000} height={800} 
+          forceXY={[0.01, 0.03]} iter={5} nodeStrength={-50}/>
         
         <div className={classes.frontPageText}>
           <Typography variant="h3" id='TechCompare'>TechCompare</Typography><br/>

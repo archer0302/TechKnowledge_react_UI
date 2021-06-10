@@ -1,12 +1,13 @@
 import React from 'react';
-import Network from '../graph/NetWork';
+// import Network from '../graph/NetWork';
+import Network from '../graph/NetWorkFIAB';
 import TrendGraph from '../graph/TrendGraph';
 import TagInfo from '../grid/TagInfo';
 import TopQuestions from '../grid/TopQuestions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from "react-router-dom";
-import { fetchSingleRelation } from '../data/RelationJson';
+import { fetchSingleRelation, louTest } from '../data/RelationJson';
 import { Card } from '@material-ui/core';
 
 export default function TagWiki() {
@@ -24,7 +25,8 @@ export default function TagWiki() {
 
   const { tag } = useParams();
 
-  const relation = fetchSingleRelation(tag, false);
+  // const relation = fetchSingleRelation(tag, false);
+  const relation = louTest(tag, false);
   
   return (
     <Grid
@@ -54,8 +56,8 @@ export default function TagWiki() {
         <Grid item xs={12}>
           <Card>
             <Network nodesData={relation.nodes} linkData={relation.links} 
-              width={500} height={400} nodeStrength={-30} iter={1}
-              centerForce={0.05}
+              width={350} height={350} nodeStrength={-10} iter={5}
+              centerForce={0.45} fontSize={10}
             />
           </Card>
         </Grid>
