@@ -108,10 +108,10 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
         neighbors[d.index] = true;
       
         link.filter(function(l){
-            if (l.source.id == d.id) {
+            if (l.source.id === d.id) {
               neighbors[l.target.index] = true;
               return true;
-            } else if (l.target.id == d.id) {
+            } else if (l.target.id === d.id) {
               neighbors[l.source.index] = true;
               return true;
             } else {
@@ -152,7 +152,7 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
         //      .attr("cy", function(d) { return d.y; });
       });
     }
-  }, [d3Container, nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce]);
+  }, [d3Container, nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce, fontSize]);
 
 
   return (

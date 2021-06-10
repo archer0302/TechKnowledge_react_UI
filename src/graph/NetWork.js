@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { CloseOutlined } from '@material-ui/icons';
 
 const drag = simulation => {
   
@@ -110,7 +109,7 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
       });
 
     }
-  }, [d3Container, nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce]);
+  }, [d3Container, nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce, fontSize]);
 
 
   return (

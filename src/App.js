@@ -10,8 +10,6 @@ import FrontPage from './layout/FrontPage';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Container } from '@material-ui/core';
 import SearchForm from './grid/SearchForm';
-import SankeyGraph from './graph/SankeyGraph';
-import ChordTagWiki from './layout/ChordTagWiki';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 // Create a theme instance.
@@ -107,12 +105,6 @@ function App() {
                 </Route>
                 <Route path='/TagWiki/:tag'>
                   <TagWiki />
-                </Route>
-                <Route path='/test/chord/:tag'>
-                  <ChordTagWiki />
-                </Route>
-                <Route path='/test'>
-                  <SankeyGraph tag='html' />
                 </Route>
                 <Route path='/'>
                   <FrontPage />

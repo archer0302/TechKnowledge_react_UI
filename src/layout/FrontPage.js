@@ -86,8 +86,8 @@ export default function FrontPage() {
       } else {
         n.distance = 100;
       }
-      n.source = nodesData.findIndex(d => d.name == n.source);
-      n.target = nodesData.findIndex(d => d.name == n.target);
+      n.source = nodesData.findIndex(d => d.name === n.source);
+      n.target = nodesData.findIndex(d => d.name === n.target);
     });
     linkData = linkData.concat(relation.links);
   });
