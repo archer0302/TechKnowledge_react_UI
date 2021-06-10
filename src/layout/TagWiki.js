@@ -7,7 +7,7 @@ import TopQuestions from '../grid/TopQuestions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from "react-router-dom";
-import { fetchSingleRelation, louTest } from '../data/RelationJson';
+import { louTest, newFormatTest } from '../data/RelationJson';
 import { Card } from '@material-ui/core';
 
 export default function TagWiki() {
@@ -25,8 +25,8 @@ export default function TagWiki() {
 
   const { tag } = useParams();
 
-  // const relation = fetchSingleRelation(tag, false);
-  const relation = louTest(tag, false);
+  const relation = newFormatTest(tag, false);
+  // const relation = louTest(tag, false);
   
   return (
     <Grid
