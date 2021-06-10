@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-// const relation = require('./relation.json');
+const relation = require('./relation.json');
 // const relation_new = require('./relation_8_new.json');
 const relation_5 = require('./relation_least_8.json');
 const louvain = require('louvain');
