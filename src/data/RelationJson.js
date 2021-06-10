@@ -1,63 +1,67 @@
 import * as d3 from 'd3';
 
 const relation = require('./relation.json');
+const nodesFile = require('./nodes.json');
+const linksFile = require('./links_strict.json');
 const relation_new = require('./relation_8_new.json');
-// const relation_32 = require('./relation_32.json');
-const relation_32_oe = require('./relation_32_oe.json');
 const louvain = require('louvain');
 
 const colors = d3.schemeCategory10;
 
 const sort_by_count = (a, b) => b.count - a.count;
 
-export const new32Test = (center) => {
-  const [, rules] = relation_32_oe[center];
-  let nodes = [center];
+export const newNodeLinks = (center) => {
+  const nodesData = nodesFile[center];
+  const linksData = linksFile[center];
+  let nodes = [];
   const links = [];
-  const init_groups = {};
-  rules.sort(sort_by_count);
+  const nodeCounts = {};
 
-  rules.forEach((rule, i) => {
-    const [target, ] = rule;
-    nodes.push(target);
-    init_groups[target] = i;
+  nodesData.forEach((data) => {
+    const [node, count] = data;
+    nodeCounts[node] = count;
+    nodes.push(node);
   });
 
-  const nodeCounts = {};
-  
-  nodes.forEach((name) => {
-    if (name !== center && !!relation_32_oe[name]) {
-      let [subCount, subRules] = relation_32_oe[name];
-      nodeCounts[name] = subCount;
-      subRules.forEach(subRule => {
-        let [target, , oeRatio] = subRule;
-        if (target !== center && nodes.some(n => n === target) && oeRatio > 1) {
-          links.push({
-            "source": name, 
-            "target": target, 
-            // "weight": count
-            "weight": oeRatio
-          });
-        }
-      });
-    }
+  // nodes = Array.from(new Set(nodes));
+
+  linksData.forEach((data) => {
+    const [rule, , oeRatio] = data;
+    links.push({
+      "source": rule[0], 
+      "target": rule[1], 
+      "weight": oeRatio
+    });
   });
 
   var community = louvain.jLouvain()
-    .nodes(nodes).edges(links)
-    .partition_init(init_groups);
+    .nodes(nodes).edges(links);
   var result  = community();
   nodes = nodes.filter(node => node !== center);
 
   var count_scale = d3.scaleLinear()
     .domain([0, d3.max(Object.values(nodeCounts))])
     .range([16, 100]);
+  
+  var oe_scale = d3.scaleLinear()
+    .domain([0, d3.max(links, d => Math.sqrt(d.weight))])
+    .range([0.05, 0.6]);
+
+  const oeToOpacity = (oe) => {
+    console.log(oe);
+    if (oe > 3) {
+      return oe_scale(Math.sqrt(oe));
+    } else {
+      return 0.05;
+    }
+  }
 
   links.forEach((n, i) => {
     const sourceIndex = nodes.findIndex(d => d === n.source);
     n.source = sourceIndex;
     n.target = nodes.findIndex(d => d === n.target);
-    // n.stroke = colors[result[nodes[sourceIndex]]];
+    n.stroke = colors[result[nodes[sourceIndex]]];
+    n.opacity = oeToOpacity(n.weight);
   });
 
   nodes = nodes.map(node => {

@@ -73,8 +73,8 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
         .enter().append("line")
         .attr("class", "link")
         .attr("stroke-width", 1)
-        .attr("stroke", d => d.stroke ? d.stroke : 'black')
-        .attr("stroke-opacity", 0.35);
+        .attr("stroke", d => d.stroke ? d.stroke : 'grey')
+        .attr("stroke-opacity", d => d.opacity ? d.opacity : 0.35);
 
       var node = svg.selectAll("g.node")
         .data(nodesData, function (d) {return d.id})
@@ -118,25 +118,27 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
               return false;
             }
           })
-            .style("stroke-opacity", 1)
+            .style("stroke-opacity", d => d.opacity ? d.opacity * 7.5 : 0.8)
             .style("stroke-width", 1.5);
       
-        circle.filter(function(n){ return neighbors[n.index] })
-            .style("stroke-width", 2);
+        // circle.filter(function(n){ return neighbors[n.index] })
+        //     .style("stroke-width", 2);
         text.filter(function(n){ return neighbors[n.index] })
-            .style("font-size", 12);
+            .style("font-size", fontSize * 1.5)
+            .style("stroke-width", 0.23);
       };
 
 
       var mouseout_node = function(event, d) { 
         link
-          .style("stroke-opacity", 0.35);
+          .style("stroke-opacity", d => d.opacity ? d.opacity : 0.35);
 
         circle
           .style("stroke-width", 1);
 
         text
-          .style("font-size", fontSize ? fontSize : 10);
+          .style("font-size", fontSize ? fontSize : 10)
+          .style("stroke-width", 0.1);;
 
       };
 
