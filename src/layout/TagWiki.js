@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useEffect, useState, useRef} from 'react';
 // import Network from '../graph/NetWork';
 import Network from '../graph/NetWorkFIAB';
 import TrendGraph from '../graph/TrendGraph';
@@ -7,10 +7,13 @@ import TopQuestions from '../grid/TopQuestions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from "react-router-dom";
-import { newNodeLinks } from '../data/RelationJson';
+import { processToNetworkGraph } from '../data/RelationJson';
 import { Card } from '@material-ui/core';
+import getNodes from '../data/db/GetNodeByCenter';
+import getLinks from '../data/db/GetLinkByCenter';
 
 export default function TagWiki() {
+  const [fetched, setFetched] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,8 +28,17 @@ export default function TagWiki() {
 
   const { tag } = useParams();
 
-  const relation = newNodeLinks(tag, false);
-  
+  const relation = useRef(null);
+
+  useEffect(() => {
+    const nodesPromise = getNodes(tag);
+    const linksPromise = getLinks(tag);
+    Promise.all([nodesPromise, linksPromise]).then(data => {
+      relation.current = processToNetworkGraph(tag, data[0].nodes, data[1].links);
+    }).then(d => setFetched(true));
+  }, [tag, relation]);
+
+
   return (
     <Grid
       className={classes.root}
@@ -54,10 +66,12 @@ export default function TagWiki() {
       <Grid item xs={12} sm={6}>
         <Grid item xs={12}>
           <Card>
-            <Network nodesData={relation.nodes} linkData={relation.links} 
+            {fetched ? (
+              <Network nodesData={relation.current.nodes} linkData={relation.current.links} 
               width={350} height={350} nodeStrength={-20} iter={5}
               centerForce={0.45} fontSize={6}
             />
+            ) : null}
           </Card>
         </Grid>
       </Grid>
