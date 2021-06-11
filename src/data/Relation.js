@@ -34,12 +34,12 @@ export const processToNetworkGraph = (center, nodesData, linksData) => {
     .domain([0, d3.max(Object.values(nodeCounts))])
     .range([16, 100]);
   
-  var oe_scale = d3.scaleLinear()
-    .domain([0, d3.max(links, d => Math.sqrt(d.weight))])
-    .range([0.05, 0.6]);
+  // var oe_scale = d3.scaleLinear()
+  //   .domain([0, d3.max(links, d => Math.sqrt(d.weight))])
+  //   .range([0.05, 0.6]);
 
   const oeToOpacity = (oe) => {
-    Math.min( (oe - 1)/8 , 1);
+    return Math.min( (oe - 1)/8 , 1);
     // console.log(oe);
     // if (oe > 3) {
     //   return oe_scale(Math.sqrt(oe));
