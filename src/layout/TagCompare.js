@@ -76,14 +76,14 @@ export default function TagCompare() {
             >
             <Grid item xs={6}>
             <Card>
-              <Network nodesData={relation_0.current.nodes} linkData={relation_0.current.links} 
+              <Network tag={tags[0]} nodesData={relation_0.current.nodes} linkData={relation_0.current.links} 
                 width={350} height={350} nodeStrength={-10} iter={5}
                 centerForce={0.45} fontSize={7}/>
             </Card>
             </Grid>
             <Grid item xs={6}>
               <Card>
-                <Network nodesData={relation_1.current.nodes} linkData={relation_1.current.links} 
+                <Network tag={tags[1]} nodesData={relation_1.current.nodes} linkData={relation_1.current.links} 
                   width={350} height={350} nodeStrength={-10} iter={5}
                   centerForce={0.45} fontSize={7}/>
               </Card>
