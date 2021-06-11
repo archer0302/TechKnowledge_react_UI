@@ -11,13 +11,27 @@ export const processToNetworkGraph = (center, nodesData, linksData) => {
   const nodeCounts = {};
 
   nodesData.forEach((data) => {
-    const [node, count] = data;
+    let [node, count] = data;
+
+    // Avoid keywords
+    if (node === 'constructor') {
+      node = 'constructer';
+    }
+
     nodeCounts[node] = count;
     nodes.push(node);
   });
 
   linksData.forEach((data) => {
-    const [rule, , oeRatio] = data;
+    let [rule, , oeRatio] = data;
+
+    // Avoid keywords
+    if (rule[0] === 'constructor') {
+      rule[0] = 'constructer';
+    } else if (rule[1] === 'constructor') {
+      rule[1] = 'constructer';
+    } 
+
     links.push({
       "source": rule[0], 
       "target": rule[1], 
@@ -33,19 +47,9 @@ export const processToNetworkGraph = (center, nodesData, linksData) => {
   var count_scale = d3.scaleLinear()
     .domain([0, d3.max(Object.values(nodeCounts))])
     .range([16, 100]);
-  
-  // var oe_scale = d3.scaleLinear()
-  //   .domain([0, d3.max(links, d => Math.sqrt(d.weight))])
-  //   .range([0.05, 0.6]);
-
+ 
   const oeToOpacity = (oe) => {
     return Math.min( (oe - 1)/8 , 1);
-    // console.log(oe);
-    // if (oe > 3) {
-    //   return oe_scale(Math.sqrt(oe));
-    // } else {
-    //   return 0.05;
-    // }
   }
 
   links.forEach((n, i) => {
@@ -57,12 +61,21 @@ export const processToNetworkGraph = (center, nodesData, linksData) => {
   });
 
   nodes = nodes.map(node => {
+    const group = result[node];
+    const color = colors[result[node]];
+    const size = Math.sqrt(count_scale(nodeCounts[node]));
+
+    // Avoid keywords
+    if (node === 'constructer') {
+      node = 'constructor';
+    }
+
     return {
       id: node,
       name: node,
-      group: result[node],
-      color: colors[result[node]],
-      size: Math.sqrt(count_scale(nodeCounts[node]))
+      group: group,
+      color: color,
+      size: size
     }
   });
 

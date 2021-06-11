@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import NetWork from '../graph/NetWorkFIAB';
 import { fetchRelation } from '../data/Relation';
 import * as d3 from 'd3';
 import { Button, Typography } from '@material-ui/core';
 import top100Tag from '../data/top100_tag.json';
-import { Redirect } from "react-router-dom";
 import { TagCloud } from 'react-tagcloud';
 import { makeStyles } from '@material-ui/core/styles';
 
 
-export default function FrontPage() {
-  const [random, setRandom] = useState([]);
+export default function FrontPage({ setTags }) {
 
   const useStyles = makeStyles((theme) => ({
     frontPageTitle: {
@@ -110,8 +108,7 @@ export default function FrontPage() {
           </Typography>
           <div style={{ paddingBottom: '40px' }}><br/>
             Don't know where to start? Search in the searchbar on top or try <br/><br/>
-            <Button variant="contained" color="secondary" onClick={() => setRandom(top100Tag[Math.floor(Math.random() * top100Tag.length)])}>Random tag</Button>
-            {random.length !== 0 ? <Redirect to={"/TagWiki/" + encodeURI(random)} /> : ''}
+            <Button variant="contained" color="secondary" onClick={() => setTags([top100Tag[Math.floor(Math.random() * top100Tag.length)]])}>Random tag</Button>
           </div>
         </div>
         <NetWork nodesData={nodesData} linkData={linkData} width={1000} height={800} 

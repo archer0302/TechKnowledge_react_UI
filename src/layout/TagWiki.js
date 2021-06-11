@@ -1,20 +1,17 @@
-import { React, useEffect, useState, useRef} from 'react';
-// import Network from '../graph/NetWork';
+import { React, useEffect, useState, useRef } from 'react';
 import Network from '../graph/NetWorkFIAB';
 import TrendGraph from '../graph/TrendGraph';
 import TagInfo from '../grid/TagInfo';
 import TopQuestions from '../grid/TopQuestions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { useParams } from "react-router-dom";
 import { processToNetworkGraph } from '../data/Relation';
 import { Card } from '@material-ui/core';
 import getNodes from '../data/db/GetNodeByCenter';
 import getLinks from '../data/db/GetLinkByCenter';
 
-export default function TagWiki() {
+export default function TagWiki({ tag }) {
   const [fetched, setFetched] = useState(false);
-  // const [tag, setTag] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,12 +24,8 @@ export default function TagWiki() {
 
   const classes = useStyles();
 
-  // setTag(useParams()['tag']);
-  const tag = decodeURIComponent(useParams()['tag']);
-
   const relation = useRef(null);
 
-  console.log(tag);
   useEffect(() => {
     const nodesPromise = getNodes(tag);
     const linksPromise = getLinks(tag);

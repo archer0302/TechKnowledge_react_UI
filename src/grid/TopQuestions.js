@@ -10,15 +10,18 @@ function TopQuestions({tagName}) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    axios.get("https://api.stackexchange.com/2.2/tags/" + tagName + "/faq?site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
-      .then(res => res.data.items)
-      .catch(error => console.log(error))
+    axios.get("https://api.stackexchange.com/2.2/tags/" + encodeURIComponent(tagName) + "/faq?site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
+      .then(res => {
+        console.log(res);
+        return res.data.items;
+      })
       .then(
         (result) => {
           setFaqs(result.slice(0, 5));
           setReady(true);
         }
       )
+      .catch(error => console.log(error))
   }, [tagName]);
 
   return (

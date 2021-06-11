@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import TagWiki from './layout/TagWiki';
 import TagCompare from './layout/TagCompare';
 import FrontPage from './layout/FrontPage';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Container } from '@material-ui/core';
 import SearchForm from './grid/SearchForm';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -75,6 +75,12 @@ function App() {
 
   const classes = useStyles();
 
+  const [tags, setTags] = useState([]);
+
+  const cleanTags = () => {
+    setTags([]);
+  }
+
   return (
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
@@ -83,33 +89,26 @@ function App() {
           <CssBaseline />
           <AppBar position="fixed" className={classes.appBar}>
             <Toolbar>
-              <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+              <Link to="/" style={{ textDecoration: 'none', color: 'white' }} onClick={cleanTags}>
                 <div>
                   <Typography variant='h6' noWrap className={classes.title}>
                     <span>TechKnowledge</span>
                   </Typography>              
                 </div>
               </Link>
-              <SearchForm />
+              <SearchForm setTags={setTags} tags={tags}/>
             </Toolbar>
           </AppBar>
-          
-
           {/* Main content */}
           <main className={classes.main}>
             <Container maxWidth='lg' className={classes.container}>
               <Toolbar/>
-              <Switch>
-                <Route path='/TagCompare/:tags'>
-                  <TagCompare />
-                </Route>
-                <Route path='/TagWiki/:tag'>
-                  <TagWiki />
-                </Route>
-                <Route path='/'>
-                  <FrontPage />
-                </Route>
-              </Switch>
+              {tags.length === 1 ?
+                <TagWiki tag={tags[0]}/> :
+                  tags.length === 2 ?
+                  <TagCompare tags={tags}/> :
+                  <FrontPage setTags={setTags}/>
+              }
               <div style={{alignContent: 'center'}}>About us | Feedback</div>
             </Container>
           </main>

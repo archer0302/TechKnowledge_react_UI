@@ -5,12 +5,11 @@ import TagInfo from '../grid/TagInfo';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
-import { useParams } from "react-router-dom";
 import { processToNetworkGraph } from '../data/Relation';
 import getNodes from '../data/db/GetNodeByCenter';
 import getLinks from '../data/db/GetLinkByCenter';
 
-export default function TagCompare() {
+export default function TagCompare({ tags }) {
   const [fetched, setFetched] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
@@ -23,9 +22,6 @@ export default function TagCompare() {
   }));
 
   const classes = useStyles();
-
-  let tags = decodeURIComponent(useParams()['tags']);
-  tags = tags.split(',');
 
   const relation_0 = useRef(null);
   const relation_1 = useRef(null);

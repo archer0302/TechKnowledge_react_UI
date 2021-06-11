@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import tag_list from '../data/tag_full_list.json';
-import { Redirect } from "react-router-dom";
 import { makeStyles } from '@material-ui/core';
 
-export default function SearchForm() {
-
-  const [value, setValue] = useState('');
-  const [result, setResult] = useState('');
+export default function SearchForm({ setTags, tags }) {
   const [error, setError] = useState(false);
   const [alert, setAlert] = useState('');
 
@@ -48,36 +43,32 @@ export default function SearchForm() {
     limit: 10,
   });
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (value) {
-      if (value.length > 2) {
-        setError(true);
-        setAlert('Maximum 2 tags.');
-      } else {
-        for (const tag of value) {
-          if (!tag_list.includes(tag)) {
-            setError(true);
-            setAlert('Tag ' + tag + ' not found.');
-            return;
-          }
-        }
-  
-        setError(false);
-        setResult(value);
-      }
-    }
-  }
-
   return (
-    <form style={{display:'flex', flexDirection: 'row', alignItems: 'center'}} onSubmit={handleSubmit}>
+    <div style={{display:'flex', flexDirection: 'row', alignItems: 'center'}}>
       <div style={{display:'flex', flexDirection: 'row', alignItems: 'center'}}>
         <div className={classes.search}>
           <Autocomplete
             multiple
             id="tags-outlined"
+            value={tags}
             onChange={(event, newValue) => {
-              setValue(newValue);
+              if (newValue) {
+                if (newValue.length > 2) {
+                  setError(true);
+                  setAlert('Maximum 2 tags.');
+                } else {
+                  for (const tag of newValue) {
+                    if (!tag_list.includes(tag)) {
+                      setError(true);
+                      setAlert('Tag ' + tag + ' not found.');
+                      return;
+                    }
+                  }
+            
+                  setError(false);
+                  setTags(newValue);
+                }
+              }
             }}
             classes={{
               inputRoot: classes.inputRoot
@@ -91,23 +82,16 @@ export default function SearchForm() {
               <TextField
                 {...params}
                 variant="outlined"
-                label="select tags"
+                label="search tags"
               />
             )}
           />
-        </div>
-        <div style={{marginLeft: '10px'}}>
-          <Button variant="contained" color="primary" size="medium" type="submit">
-            Search
-          </Button>
         </div>
       </div>
       
       <div style={{marginLeft: '10px'}}>
         {(error && !!alert) ? <Alert severity="error">{alert}</Alert> : ''}
-        {result ? result.length === 1 ? <Redirect to={"/TagWiki/" + encodeURIComponent(result)} /> : 
-         result.length === 2 ? <Redirect to={"/TagCompare/" + encodeURIComponent(result)} /> : '' : ''}
       </div>
-    </form>
+    </div>
   )
 }
