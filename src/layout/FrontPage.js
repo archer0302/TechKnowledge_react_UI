@@ -92,8 +92,6 @@ export default function FrontPage() {
     linkData = linkData.concat(relation.links);
   });
 
-  console.log(linkData);
-  
   top10.forEach((tag) => {
     const index = nodesData.findIndex(e => e.name === tag);
     nodesData[index] = {...nodesData[index], center: true, size: 10};  

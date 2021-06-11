@@ -14,6 +14,7 @@ import getLinks from '../data/db/GetLinkByCenter';
 
 export default function TagWiki() {
   const [fetched, setFetched] = useState(false);
+  // const [tag, setTag] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,10 +27,12 @@ export default function TagWiki() {
 
   const classes = useStyles();
 
-  const { tag } = useParams();
+  // setTag(useParams()['tag']);
+  const tag = decodeURIComponent(useParams()['tag']);
 
   const relation = useRef(null);
 
+  console.log(tag);
   useEffect(() => {
     const nodesPromise = getNodes(tag);
     const linksPromise = getLinks(tag);

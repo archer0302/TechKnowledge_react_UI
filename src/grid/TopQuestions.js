@@ -9,7 +9,6 @@ function TopQuestions({tagName}) {
   const [faqs, setFaqs] = useState([]);
   const [ready, setReady] = useState(false);
 
-  console.log("top question: " + tagName);
   useEffect(() => {
     axios.get("https://api.stackexchange.com/2.2/tags/" + tagName + "/faq?site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
       .then(res => res.data.items)

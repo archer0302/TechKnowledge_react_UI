@@ -66,9 +66,6 @@ export const processToNetworkGraph = (center, nodesData, linksData) => {
     }
   });
 
-  console.log(nodes);
-  console.log(links);
-
   return {"nodes": nodes, "links": links};
 }
 

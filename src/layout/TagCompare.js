@@ -24,7 +24,7 @@ export default function TagCompare() {
 
   const classes = useStyles();
 
-  let { tags } = useParams();
+  let tags = decodeURIComponent(useParams()['tags']);
   tags = tags.split(',');
 
   const relation_0 = useRef(null);

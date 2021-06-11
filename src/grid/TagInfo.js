@@ -16,17 +16,16 @@ function TagInfo({tagName}) {
   useEffect(() => {
     axios.get("https://api.stackexchange.com/2.2/tags/" + encodeURIComponent(tagName) + "/wikis?site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
       .then(res => res.data.items[0])
-      .catch(error => console.log(error))
       .then(
         (result) => {
           setExcerpt(result.excerpt);
           setExcerptReady(true);
         }
       )
+      .catch(error => console.log(error));
 
     axios.get("https://api.stackexchange.com/2.2/tags/" + encodeURIComponent(tagName) + "/synonyms?order=desc&sort=applied&site=stackoverflow&key=fTs*5TgDx2*UnZFUQ8hHEQ((")
     .then(res => res.data.items)
-    .catch(error => console.log(error))
     .then(
       (result) => {
         const synonyms = result.map((element) => element.from_tag);
@@ -34,6 +33,7 @@ function TagInfo({tagName}) {
         setSynonymsReady(true);
       }
     )
+    .catch(error => console.log(error));
   }, [tagName]);
 
   return (

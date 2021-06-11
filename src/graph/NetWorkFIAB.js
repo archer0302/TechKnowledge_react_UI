@@ -118,7 +118,7 @@ export default function NetWork({ tag, nodesData, linkData, width, height, force
               return false;
             }
           })
-            .style("stroke-opacity", d => d.opacity ? d.opacity * 7.5 : 0.8)
+            .style("stroke-opacity", 0.75)
             .style("stroke-width", 1.5);
       
         // circle.filter(function(n){ return neighbors[n.index] })
