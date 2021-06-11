@@ -7,7 +7,7 @@ import TopQuestions from '../grid/TopQuestions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from "react-router-dom";
-import { processToNetworkGraph } from '../data/RelationJson';
+import { processToNetworkGraph } from '../data/Relation';
 import { Card } from '@material-ui/core';
 import getNodes from '../data/db/GetNodeByCenter';
 import getLinks from '../data/db/GetLinkByCenter';
@@ -67,7 +67,7 @@ export default function TagWiki() {
         <Grid item xs={12}>
           <Card>
             {fetched ? (
-              <Network nodesData={relation.current.nodes} linkData={relation.current.links} 
+              <Network tag={tag} nodesData={relation.current.nodes} linkData={relation.current.links} 
               width={350} height={350} nodeStrength={-20} iter={5}
               centerForce={0.45} fontSize={6}
             />

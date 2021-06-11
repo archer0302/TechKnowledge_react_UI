@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import NetWork from '../graph/NetWorkFIAB';
-import { fetchRelation } from '../data/RelationJson';
+import { fetchRelation } from '../data/Relation';
 import * as d3 from 'd3';
 import { Button, Typography } from '@material-ui/core';
 import top100Tag from '../data/top100_tag.json';

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import * as forceInABox from 'force-in-a-box';
 
@@ -33,7 +33,7 @@ function collideForce(d) {
 
 
 /* Component */
-export default function NetWork({ nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce, fontSize }) {
+export default function NetWork({ tag, nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce, fontSize }) {
 
   const d3Container = useRef(null);
 
@@ -154,12 +154,10 @@ export default function NetWork({ nodesData, linkData, width, height, forceXY, n
         //      .attr("cy", function(d) { return d.y; });
       });
     }
-  }, [d3Container, nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce, fontSize]);
-
+  }, [d3Container, nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce, fontSize, tag]);
 
   return (
     <svg
-      // style={{border:'1px solid grey'}}
       className="d3-component"
       ref={d3Container}
     />
