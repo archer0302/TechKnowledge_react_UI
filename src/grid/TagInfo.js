@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import axios from 'axios';
 import LabelRounded from '@material-ui/icons/LabelRounded';
 import * as he from 'he';
@@ -57,7 +58,10 @@ function TagInfo({tagName}) {
               <br/><b>Synonyms: </b>{synonyms.join(', ')}
             </Typography>
             ) : null
-          }
+          }<br/>
+          <Link href={'https://stackoverflow.com/tags/' + tagName + '/info'} target="_blank">
+            Learn more on StackOverflow
+          </Link>
         </CardContent>
       </Card>
     </Grow>

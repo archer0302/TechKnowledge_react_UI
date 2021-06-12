@@ -27,6 +27,7 @@ export default function TagCompare({ tags, setTags }) {
   const relation_1 = useRef(null);
 
   useEffect(() => {
+    setFetched(false);
     const nodesPromise_0 = getNodes(tags[0]);
     const linksPromise_0 = getLinks(tags[0]);
 
