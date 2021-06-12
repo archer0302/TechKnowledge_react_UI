@@ -10,7 +10,7 @@ import { Card } from '@material-ui/core';
 import getNodes from '../data/db/GetNodeByCenter';
 import getLinks from '../data/db/GetLinkByCenter';
 
-export default function TagWiki({ tag }) {
+export default function TagWiki({ tag, setTags }) {
   const [fetched, setFetched] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
@@ -27,6 +27,7 @@ export default function TagWiki({ tag }) {
   const relation = useRef(null);
 
   useEffect(() => {
+    setFetched(false);
     const nodesPromise = getNodes(tag);
     const linksPromise = getLinks(tag);
     Promise.all([nodesPromise, linksPromise]).then(data => {
@@ -65,7 +66,7 @@ export default function TagWiki({ tag }) {
             {fetched ? (
               <Network tag={tag} nodesData={relation.current.nodes} linkData={relation.current.links} 
               width={350} height={350} nodeStrength={-20} iter={5}
-              centerForce={0.45} fontSize={6}
+              centerForce={0.45} fontSize={6} setTags={setTags}
             />
             ) : null}
           </Card>

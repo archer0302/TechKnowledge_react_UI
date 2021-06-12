@@ -9,7 +9,7 @@ import { processToNetworkGraph } from '../data/Relation';
 import getNodes from '../data/db/GetNodeByCenter';
 import getLinks from '../data/db/GetLinkByCenter';
 
-export default function TagCompare({ tags }) {
+export default function TagCompare({ tags, setTags }) {
   const [fetched, setFetched] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
@@ -74,14 +74,14 @@ export default function TagCompare({ tags }) {
             <Card>
               <Network tag={tags[0]} nodesData={relation_0.current.nodes} linkData={relation_0.current.links} 
                 width={350} height={350} nodeStrength={-10} iter={5}
-                centerForce={0.45} fontSize={7}/>
+                centerForce={0.45} fontSize={7} setTags={setTags}/>
             </Card>
             </Grid>
             <Grid item xs={6}>
               <Card>
                 <Network tag={tags[1]} nodesData={relation_1.current.nodes} linkData={relation_1.current.links} 
                   width={350} height={350} nodeStrength={-10} iter={5}
-                  centerForce={0.45} fontSize={7}/>
+                  centerForce={0.45} fontSize={7} setTags={setTags}/>
               </Card>
             </Grid>
           </Grid>

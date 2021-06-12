@@ -104,9 +104,9 @@ function App() {
             <Container maxWidth='lg' className={classes.container}>
               <Toolbar/>
               {tags.length === 1 ?
-                <TagWiki tag={tags[0]}/> :
+                <TagWiki tag={tags[0]} setTags={setTags}/> :
                   tags.length === 2 ?
-                  <TagCompare tags={tags}/> :
+                  <TagCompare tags={tags} setTags={setTags}/> :
                   <FrontPage setTags={setTags}/>
               }
               <div style={{alignContent: 'center'}}>About us | Feedback</div>

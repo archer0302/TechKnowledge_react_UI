@@ -112,7 +112,7 @@ export default function FrontPage({ setTags }) {
           </div>
         </div>
         <NetWork nodesData={nodesData} linkData={linkData} width={1000} height={800} 
-          forceXY={[0.01, 0.03]} iter={5} nodeStrength={-50}/>
+          forceXY={[0.01, 0.03]} iter={5} nodeStrength={-50} setTags={setTags}/>
         
         <div className={classes.frontPageText}>
           <Typography variant="h3" id='TechCompare'>TechCompare</Typography><br/>

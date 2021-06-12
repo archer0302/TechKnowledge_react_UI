@@ -33,7 +33,7 @@ function collideForce(d) {
 
 
 /* Component */
-export default function NetWork({ tag, nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce, fontSize }) {
+export default function NetWork({ tag, nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce, fontSize, setTags }) {
 
   const d3Container = useRef(null);
 
@@ -83,7 +83,15 @@ export default function NetWork({ tag, nodesData, linkData, width, height, force
         .attr("class", "node")
         .call(drag(simulation))
         .on("mouseover", function(event, d) { mouseover_node(event, d); })
-        .on("mouseout", function(event, d) { mouseout_node(event, d); });
+        .on("mouseout", function(event, d) { mouseout_node(event, d); })
+        .on("dblclick", function(event, d) { setTags([d.name]); });
+
+      if (tag) {
+        node.on('contextmenu', function(event, d) { 
+          event.preventDefault();
+          setTags([tag, d.name]) 
+        });
+      }
 
       var circle = node.append("circle")
         .attr("r", d => d.size ? d.size : 8)
@@ -154,7 +162,7 @@ export default function NetWork({ tag, nodesData, linkData, width, height, force
         //      .attr("cy", function(d) { return d.y; });
       });
     }
-  }, [d3Container, nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce, fontSize, tag]);
+  }, [d3Container, nodesData, linkData, width, height, forceXY, nodeStrength, iter, centerForce, fontSize, tag, setTags]);
 
   return (
     <svg
