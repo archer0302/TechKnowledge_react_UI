@@ -45,7 +45,7 @@ export default function DiffPost({ post, open, postId }) {
           secondary={
             <div className={classes.nestedChild}>
               <Typography>
-                From  
+                - from&nbsp; 
                 <Link href={`https://stackoverflow.com/questions/${postId}`} target="_blank">
                   #{postId}
                 </Link>

@@ -11,22 +11,11 @@ import getNodes from '../data/db/GetNodeByCenter';
 import getLinks from '../data/db/GetLinkByCenter';
 import fetchDiffData from '../data/DiffTechData';
 import DiffAspect from './DiffAspect';
-import * as d3 from 'd3';
-
-const colors = d3.schemeCategory10;
 
 export default function TagCompare({ tags, setTags }) {
   const [fetched, setFetched] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  const {opinions: opinionsData, posts: postsData} = fetchDiffData(tags);
-
-  const [posts, setPosts] = useState(postsData);
-  const [opinions, setOpinions] = useState(opinionsData);
-  
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  const [posts, setPosts] = useState({});
+  const [opinions, setOpinions] = useState({});
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -58,6 +47,10 @@ export default function TagCompare({ tags, setTags }) {
         relation_0.current = processToNetworkGraph(tags[0], data[0].nodes, data[1].links);
         relation_1.current = processToNetworkGraph(tags[1], data[2].nodes, data[3].links);
       }).then(d => setFetched(true));
+
+    const {opinions: opinionsData, posts: postsData} = fetchDiffData(tags);
+    setPosts(postsData);
+    setOpinions(opinionsData);
 
   }, [tags, relation_0, relation_1]);
 
@@ -130,7 +123,7 @@ export default function TagCompare({ tags, setTags }) {
               return (
                 <DiffAspect aspect={key} opinions={value} tags={tags} posts={posts} />
               )
-            }) : <div>null</div>
+            }) : ''
           }
         </List>
       </Grid>
