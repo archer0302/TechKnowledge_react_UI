@@ -11,7 +11,7 @@ import getNodes from '../data/db/GetNodeByCenter';
 import getLinks from '../data/db/GetLinkByCenter';
 import fetchDiffData from '../data/DiffTechData';
 import DiffAspect from './DiffAspect';
-import { PieChart, Pie, ResponsiveContainer, Tooltip } from "recharts";
+import { PieChart, Pie, ResponsiveContainer } from "recharts";
 import * as d3 from 'd3';
 
 const colors = d3.schemeCategory10;
