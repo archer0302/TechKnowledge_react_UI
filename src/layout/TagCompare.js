@@ -4,13 +4,29 @@ import TrendGraph from '../graph/TrendGraph';
 import TagInfo from '../grid/TagInfo';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
 import { processToNetworkGraph } from '../data/Relation';
 import getNodes from '../data/db/GetNodeByCenter';
 import getLinks from '../data/db/GetLinkByCenter';
+import fetchDiffData from '../data/DiffTechData';
+import DiffAspect from './DiffAspect';
+import * as d3 from 'd3';
+
+const colors = d3.schemeCategory10;
 
 export default function TagCompare({ tags, setTags }) {
   const [fetched, setFetched] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const {opinions: opinionsData, posts: postsData} = fetchDiffData(tags);
+
+  const [posts, setPosts] = useState(postsData);
+  const [opinions, setOpinions] = useState(opinionsData);
+  
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,7 +34,10 @@ export default function TagCompare({ tags, setTags }) {
     },
     knowledgeGraph: {
       height: '600px'
-    }
+    },
+    nested: {
+      paddingLeft: theme.spacing(4),
+    },
   }));
 
   const classes = useStyles();
@@ -39,6 +58,7 @@ export default function TagCompare({ tags, setTags }) {
         relation_0.current = processToNetworkGraph(tags[0], data[0].nodes, data[1].links);
         relation_1.current = processToNetworkGraph(tags[1], data[2].nodes, data[3].links);
       }).then(d => setFetched(true));
+
   }, [tags, relation_0, relation_1]);
 
   return (
@@ -104,7 +124,15 @@ export default function TagCompare({ tags, setTags }) {
       </Grid>
 
       <Grid item xs={12}>
-        Comparison
+        <List>
+          {!!opinions && !!posts ? 
+            Object.entries(opinions).map(([key, value], index) => {
+              return (
+                <DiffAspect aspect={key} opinions={value} tags={tags} posts={posts} />
+              )
+            }) : <div>null</div>
+          }
+        </List>
       </Grid>
     </Grid>
   )
