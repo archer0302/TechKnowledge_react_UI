@@ -11,11 +11,16 @@ import getNodes from '../data/db/GetNodeByCenter';
 import getLinks from '../data/db/GetLinkByCenter';
 import fetchDiffData from '../data/DiffTechData';
 import DiffAspect from './DiffAspect';
+import { PieChart, Pie, ResponsiveContainer, Tooltip } from "recharts";
+import * as d3 from 'd3';
+
+const colors = d3.schemeCategory10;
 
 export default function TagCompare({ tags, setTags }) {
   const [fetched, setFetched] = useState(false);
   const [posts, setPosts] = useState({});
   const [opinions, setOpinions] = useState({});
+  const [pieData, setPieData] = useState([]);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,6 +56,36 @@ export default function TagCompare({ tags, setTags }) {
     const {opinions: opinionsData, posts: postsData} = fetchDiffData(tags);
     setPosts(postsData);
     setOpinions(opinionsData);
+
+    const pData = [{
+      name: tags[0],
+      value: 0,
+      fill: colors[0]
+    },{
+      name: tags[1],
+      value: 0,
+      fill: colors[1]
+    },{
+      name: 'neutral',
+      value: 0,
+      fill: 'grey'
+    }];
+
+    let total = 0
+
+    Object.values(opinionsData).forEach((value, i) => {
+      pData[0].value = value[0] ? pData[0].value + value[0] : pData[0].value;
+      pData[1].value = value[1] ? pData[1].value + value[1] : pData[1].value;
+      pData[2].value = value[2] ? pData[2].value + value[2] : pData[2].value;
+      total += 1;
+    });
+
+    pData.forEach(d => {
+      d.value = parseFloat((d.value / total * 100).toFixed(2));
+    });
+
+    console.log(pData);
+    setPieData(pData);
 
   }, [tags, relation_0, relation_1]);
 
@@ -111,6 +146,19 @@ export default function TagCompare({ tags, setTags }) {
           <Grid item xs={6}>
             <h4>Asking Trend on StackOverflow</h4>
             <TrendGraph height={350} tags={tags}/>
+          </Grid>
+          <Grid item xs={6}>
+            {
+              !!pieData ? (
+                <div style={{ width: "100%", height: 400 }}>
+                  <ResponsiveContainer>
+                    <PieChart>
+                      <Pie dataKey="value" data={pieData} label={d => `${d.name}: ${d.value}%`} isAnimationActive={false}/>
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              ) : ''
+            }
           </Grid>
           
         </Grid>
