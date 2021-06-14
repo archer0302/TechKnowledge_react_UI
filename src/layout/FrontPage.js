@@ -4,7 +4,7 @@ import { fetchRelation } from '../data/Relation';
 import * as d3 from 'd3';
 import { Button, Typography } from '@material-ui/core';
 import top100Tag from '../data/top100_tag.json';
-import { TagCloud } from 'react-tagcloud';
+// import { TagCloud } from 'react-tagcloud';
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -36,28 +36,28 @@ export default function FrontPage({ setTags }) {
     'sql'
   ];
 
-  const cloud_data = [
-    { value: 'jQuery vs Reactjs', count: 25, props: { style: { paddingLeft: '30px'} } },
-    { value: 'MongoDB vs sql', count: 18 },
-    { value: 'JavaScript vs Python', count: 38 },
-    { value: 'npm vs yarn', count: 28 },
-    { value: 'Express.js vs nodejs', count: 25 },
-    { value: 'HTML5 vs HTML', count: 33 },
-    { value: 'CSS3 vs SCSS', count: 20 },
-    { value: 'Babel.js', count: 7 },
-    { value: 'ECMAScript vs Typescript', count: 25 },
-    { value: 'Jest', count: 15 },
-    { value: 'Mocha', count: 17 },
-    { value: 'React Native', count: 27 },
-    { value: 'Angular.js', count: 30 },
-    { value: 'TypeScript', count: 15 },
-    { value: 'Flow', count: 30 },
-    { value: 'NPM', count: 11 },
-  ]
+  // const cloud_data = [
+  //   { value: 'jQuery vs Reactjs', count: 25, props: { style: { paddingLeft: '30px'} } },
+  //   { value: 'MongoDB vs sql', count: 18 },
+  //   { value: 'JavaScript vs Python', count: 38 },
+  //   { value: 'npm vs yarn', count: 28 },
+  //   { value: 'Express.js vs nodejs', count: 25 },
+  //   { value: 'HTML5 vs HTML', count: 33 },
+  //   { value: 'CSS3 vs SCSS', count: 20 },
+  //   { value: 'Babel.js', count: 7 },
+  //   { value: 'ECMAScript vs Typescript', count: 25 },
+  //   { value: 'Jest', count: 15 },
+  //   { value: 'Mocha', count: 17 },
+  //   { value: 'React Native', count: 27 },
+  //   { value: 'Angular.js', count: 30 },
+  //   { value: 'TypeScript', count: 15 },
+  //   { value: 'Flow', count: 30 },
+  //   { value: 'NPM', count: 11 },
+  // ]
 
-  const color_options = {
-    luminosity: 'dark',
-  }
+  // const color_options = {
+  //   luminosity: 'dark',
+  // }
 
   let nodesData = [];
   let linkData = [];
@@ -114,7 +114,7 @@ export default function FrontPage({ setTags }) {
         <NetWork nodesData={nodesData} linkData={linkData} width={1000} height={800} 
           forceXY={[0.01, 0.03]} iter={5} nodeStrength={-50} setTags={setTags}/>
         
-        <div className={classes.frontPageText}>
+        {/* <div className={classes.frontPageText}>
           <Typography variant="h3" id='TechCompare'>TechCompare</Typography><br/>
           <Typography variant="h6">Comparison between technologies.</Typography><br/>
           <Typography variant="body">
@@ -131,7 +131,7 @@ export default function FrontPage({ setTags }) {
           colorOptions={color_options}
           style={{ textAlign: 'center' }}
           onClick={tag => alert(`'${tag.value}' was selected!`)}
-        />
+        /> */}
       </div>
     </div>
   )
