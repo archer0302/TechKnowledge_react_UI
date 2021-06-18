@@ -58,6 +58,10 @@ export default function TagCompare({ tags, setTags }) {
     setOpinions(opinionsData);
 
     const pData = [{
+      name: 'neutral',
+      value: 0,
+      fill: 'grey'
+    },{
       name: tags[0],
       value: 0,
       fill: colors[0]
@@ -65,27 +69,22 @@ export default function TagCompare({ tags, setTags }) {
       name: tags[1],
       value: 0,
       fill: colors[1]
-    },{
-      name: 'neutral',
-      value: 0,
-      fill: 'grey'
     }];
 
     let total = 0
 
-    Object.values(opinionsData).forEach((value, i) => {
-      pData[0].value = value[0] ? pData[0].value + value[0] : pData[0].value;
-      pData[1].value = value[1] ? pData[1].value + value[1] : pData[1].value;
-      pData[2].value = value[2] ? pData[2].value + value[2] : pData[2].value;
-      total += 1;
-    });
-
-    pData.forEach(d => {
-      d.value = parseFloat((d.value / total * 100).toFixed(2));
-    });
-
-    console.log(pData);
-    setPieData(pData);
+    if (opinionsData) {
+      Object.values(opinionsData).forEach((value, i) => {
+        pData[0].value = value[0] ? pData[0].value + value[0] : pData[0].value;
+        pData[1].value = value[1] ? pData[1].value + value[1] : pData[1].value;
+        pData[2].value = value[2] ? pData[2].value + value[2] : pData[2].value;
+        total += 1;
+      });
+      pData.forEach(d => {
+        d.value = parseFloat((d.value / total * 100).toFixed(2));
+      });
+      setPieData(pData);
+    }
 
   }, [tags, relation_0, relation_1]);
 
